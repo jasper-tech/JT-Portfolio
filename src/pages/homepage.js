@@ -11,12 +11,10 @@ import {
 } from "lucide-react";
 
 export default function HomePage() {
-  const [showGuide, setShowGuide] = useState(true);
-
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white overflow-y-auto overflow-x-hidden snap-y snap-mandatory scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 dark:scrollbar-thumb-gray-600 dark:scrollbar-track-gray-800">
       {/* Hero Section */}
-      <section className="h-screen flex flex-col items-center justify-center text-center px-6">
+      <section className="h-screen flex flex-col items-center justify-center text-center px-6 snap-start">
         <motion.h1
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -31,8 +29,11 @@ export default function HomePage() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mt-4 text-lg md:text-xl"
         >
-          Full-Stack Developer | React | Next.js | Node.js
+          Full-Stack Developer | <span className="text-green-500">React</span> |{" "}
+          <span className="text-green-500">Next.js</span> |{" "}
+          <span className="text-green-500">Node.js</span>
         </motion.p>
+
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -55,7 +56,7 @@ export default function HomePage() {
       </section>
 
       {/* About Me */}
-      <section className="py-16 text-center px-6">
+      <section className="h-screen flex flex-col items-center justify-center bg-gray-800 text-center px-6 snap-start">
         <h2 className="text-3xl font-bold">About Me</h2>
         <p className="mt-4 max-w-2xl mx-auto text-lg">
           I'm a passionate software developer specializing in modern web
@@ -65,7 +66,7 @@ export default function HomePage() {
       </section>
 
       {/* Projects */}
-      <section className="py-20 px-8">
+      <section className="h-screen flex flex-col items-center justify-center px-8 snap-start">
         <h2 className="text-4xl font-bold text-center">Projects</h2>
         <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
@@ -94,8 +95,6 @@ export default function HomePage() {
               className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-lg transition-all duration-300"
             >
               <h3 className="text-2xl font-semibold">{project.title}</h3>
-
-              {/* Animated Tech Stack */}
               <div className="mt-3 flex flex-wrap gap-2">
                 {project.tech.map((stack, i) => (
                   <motion.span
@@ -109,7 +108,6 @@ export default function HomePage() {
                   </motion.span>
                 ))}
               </div>
-
               <Link
                 to={project.link}
                 className="mt-4 inline-block text-blue-500"
@@ -122,7 +120,7 @@ export default function HomePage() {
       </section>
 
       {/* Experience */}
-      <section className="py-16 px-6 bg-gray-100 dark:bg-gray-800 text-center">
+      <section className="h-screen flex flex-col items-center justify-center px-6 bg-gray-100 dark:bg-gray-800 text-center snap-start">
         <h2 className="text-3xl font-bold">Experience</h2>
         <div className="mt-6 space-y-4">
           <div className="flex items-center space-x-4 justify-center">
@@ -137,43 +135,30 @@ export default function HomePage() {
       </section>
 
       {/* Contact */}
-      <section className="py-16 px-6 text-center">
+      <section className="h-screen flex flex-col items-center justify-center px-6 text-center snap-start">
         <h2 className="text-3xl font-bold">Get in Touch</h2>
         <p className="mt-4">Let's build something amazing together!</p>
         <div className="mt-6 flex justify-center space-x-4">
           <a
-            href="mailto:jasper@example.com"
+            href="mailto:sandyjasper922@gmail.com"
             className="p-3 bg-blue-500 text-white rounded-full"
           >
             <Mail />
           </a>
           <a
-            href="https://github.com/jasper"
+            href="https://github.com/jasper-tech"
             className="p-3 bg-gray-900 text-white rounded-full"
           >
             <Github />
           </a>
           <a
-            href="https://linkedin.com/in/jasper"
+            href="https://linkedin.com/in/afeawo-sandy-298235215"
             className="p-3 bg-blue-700 text-white rounded-full"
           >
             <Linkedin />
           </a>
         </div>
       </section>
-
-      {/* Floating Guide Avatar */}
-      {/* {showGuide && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="fixed bottom-6 right-6 bg-blue-500 text-white p-4 rounded-full shadow-lg cursor-pointer"
-          onClick={() => setShowGuide(false)}
-        >
-          👋 Need Help?
-        </motion.div>
-      )} */}
     </div>
   );
 }
