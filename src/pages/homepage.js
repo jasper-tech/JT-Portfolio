@@ -46,7 +46,7 @@ export default function HomePage() {
             <span>View Portfolio</span> <ArrowRight />
           </Link>
           <Link
-            to="/contact"
+            to="#"
             className="px-6 py-3 border border-blue-500 text-blue-500 rounded-lg"
           >
             Contact Me
@@ -131,7 +131,7 @@ export default function HomePage() {
           </div>
           <div className="flex items-center space-x-4 justify-center">
             <Code className="w-6 h-6 text-blue-500" />
-            <p>Freelance Full-Stack Developer</p>
+            <p>Full-Stack Developer</p>
           </div>
         </div>
       </section>

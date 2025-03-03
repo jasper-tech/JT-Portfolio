@@ -29,20 +29,11 @@ export default function Navbar() {
           Jasper.dev
         </Link>
         <nav className="hidden md:flex space-x-6">
-          {["Home", "About", "Portfolio", "Contact"].map((item, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <Link
-                to={`/${item.toLowerCase()}`}
-                className="hover:text-blue-500 text-white"
-              >
-                {item}
-              </Link>
-            </motion.div>
-          ))}
+          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+            <Link to="/cv" className="hover:text-blue-500 text-white">
+              My CV
+            </Link>
+          </motion.div>
         </nav>
         <button
           className="md:hidden p-2 rounded-lg focus:outline-none"
@@ -58,15 +49,9 @@ export default function Navbar() {
           transition={{ duration: 0.3 }}
           className="md:hidden flex flex-col items-center space-y-4 py-4 bg-white"
         >
-          {["Home", "About", "Portfolio", "Contact"].map((item, index) => (
-            <Link
-              key={index}
-              to={`/${item.toLowerCase()}`}
-              className="text-lg text-gray-900"
-            >
-              {item}
-            </Link>
-          ))}
+          <Link to="/cv" className="text-lg text-gray-900">
+            My CV
+          </Link>
         </motion.div>
       )}
     </motion.header>

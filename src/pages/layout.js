@@ -1,4 +1,4 @@
-import Footer from "../components/footer";
+// import Footer from "../components/footer";
 import NavBar from "../components/navbar";
 import HomePage from "./homepage";
 
@@ -9,7 +9,7 @@ const ScreenLayout = () => {
       <main className="flex-grow">
         <HomePage />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
