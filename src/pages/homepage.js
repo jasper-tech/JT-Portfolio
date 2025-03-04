@@ -120,16 +120,34 @@ export default function HomePage() {
       </section>
 
       {/* Experience */}
-      <section className="h-screen flex flex-col items-center justify-center px-6 bg-gray-100 dark:bg-gray-800 text-center snap-start">
-        <h2 className="text-3xl font-bold">Experience</h2>
-        <div className="mt-6 space-y-4">
-          <div className="flex items-center space-x-4 justify-center">
-            <Briefcase className="w-6 h-6 text-blue-500" />
-            <p>Software Developer at XYZ Company (2022 - Present)</p>
+      <section className="h-screen flex flex-col items-center justify-center px-6 bg-gray-800 text-center snap-start">
+        <h2 className="text-4xl font-extrabold text-gray-900 dark:text-white">
+          Experience
+        </h2>
+        <div className="mt-8 max-w-3xl w-full space-y-6">
+          <div className="flex flex-col items-center bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border dark:border-gray-700">
+            <div className="flex items-center space-x-4">
+              <Briefcase className="w-7 h-7 text-blue-600 dark:text-blue-400" />
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                Software Developer at XYZ Company
+              </h3>
+            </div>
+            <p className="text-gray-600 dark:text-gray-300 text-sm">
+              2022 - Present
+            </p>
           </div>
-          <div className="flex items-center space-x-4 justify-center">
-            <Code className="w-6 h-6 text-blue-500" />
-            <p>Full-Stack Developer</p>
+
+          <div className="flex flex-col items-center bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg border dark:border-gray-700">
+            <div className="flex items-center space-x-4">
+              <Code className="w-7 h-7 text-blue-600 dark:text-blue-400" />
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                Full-Stack Developer
+              </h3>
+            </div>
+            <p className="text-gray-600 dark:text-gray-300 text-sm">
+              Expertise in modern web development, including React, Next.js, and
+              Node.js.
+            </p>
           </div>
         </div>
       </section>
