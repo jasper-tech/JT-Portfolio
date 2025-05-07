@@ -202,25 +202,9 @@ const HomePage: FC = () => {
 
       {/* Projects Section with updated styling */}
       <section className="py-20">
-        {/* <div className="max-w-9xl mx-auto px-6"> */}
-        {/* <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold mb-2">Featured Projects</h2>
-            <div className="w-20 h-1 bg-blue-500 mx-auto"></div>
-            <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
-              A selection of my recent work and personal projects
-            </p>
-          </motion.div> */}
-
         <div>
           <ProjectsSection />
         </div>
-        {/* </div> */}
       </section>
 
       {/* Call to Action */}

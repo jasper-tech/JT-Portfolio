@@ -27,18 +27,18 @@ const featuredProjects: Project[] = [
     featured: true,
     year: "2024",
   },
-  {
-    title: "Task Manager",
-    description:
-      "A Next.js and MongoDB-based task management system with role-based access control.",
-    tech: ["Next.js", "MongoDB", "TypeScript", "Material-UI"],
-    link: "/projects/taskmanager",
-    github: "https://github.com/user/taskmanager",
-    image: "/images/projects/task-manager.jpg",
-    category: "Personal",
-    featured: true,
-    year: "2024",
-  },
+  //   {
+  //     title: "BibleQuiz App",
+  //     description:
+  //       "A Next. js app for Bible quizzes, featuring a user-friendly interface and real-time score tracking.",
+  //     tech: ["Next.js", "TypeScript", "Firebase", "Tailwind CSS"],
+  //     link: "https://epsu-dv-bible-trivia-bowl.vercel.app",
+  //     github: "https://github.com/jasper-tech/EPSU-DV-Bible-Trivia-Bowl",
+  //     image: "/images/projects/epsu-dv-bible-quiz-app.jpg",
+  //     category: "none",
+  //     featured: true,
+  //     year: "2025",
+  //   },
   {
     title: "AI Chatbot",
     description:
@@ -55,109 +55,110 @@ const featuredProjects: Project[] = [
 
 // Additional personal projects
 const additionalPersonalProjects: Project[] = [
-  {
-    title: "Portfolio Website",
-    description:
-      "My personal portfolio website built with React and Three.js for interactive 3D elements.",
-    tech: ["React", "Three.js", "Framer Motion", "Tailwind CSS"],
-    link: "/",
-    github: "https://github.com/user/portfolio",
-    image: "/images/projects/portfolio.jpg",
-    category: "Personal",
-    year: "2024",
-  },
-  {
-    title: "Weather Dashboard",
-    description:
-      "A responsive weather application with 7-day forecasts, animated weather conditions, and location search.",
-    tech: ["Vue.js", "OpenWeather API", "Chart.js", "SCSS"],
-    link: "/projects/weather",
-    github: "https://github.com/user/weather-app",
-    image: "/images/projects/weather-app.jpg",
-    category: "Personal",
-    year: "2023",
-  },
-  {
-    title: "Markdown Editor",
-    description:
-      "A real-time markdown editor with syntax highlighting, preview mode, and local storage integration.",
-    tech: ["React", "CodeMirror", "LocalStorage API", "Marked"],
-    link: "/projects/markdown",
-    github: "https://github.com/user/markdown-editor",
-    image: "/images/projects/markdown-editor.jpg",
-    category: "Personal",
-    year: "2023",
-  },
-  {
-    title: "Recipe App",
-    description:
-      "A recipe discovery and management app with user authentication, favorites, and meal planning features.",
-    tech: ["React Native", "Firebase", "Redux", "Expo"],
-    link: "/projects/recipe-app",
-    github: "https://github.com/user/recipe-app",
-    image: "/images/projects/recipe-app.jpg",
-    category: "Personal",
-    year: "2022",
-  },
+  //   {
+  //     title: "Portfolio Website",
+  //     description:
+  //       "My personal portfolio website built with React and Three.js for interactive 3D elements.",
+  //     tech: ["React", "Three.js", "Framer Motion", "Tailwind CSS"],
+  //     link: "/",
+  //     github: "https://github.com/user/portfolio",
+  //     image: "/images/projects/portfolio.jpg",
+  //     category: "Personal",
+  //     year: "2024",
+  //   },
+  //   {
+  //     title: "Weather Dashboard",
+  //     description:
+  //       "A responsive weather application with 7-day forecasts, animated weather conditions, and location search.",
+  //     tech: ["Vue.js", "OpenWeather API", "Chart.js", "SCSS"],
+  //     link: "/projects/weather",
+  //     github: "https://github.com/user/weather-app",
+  //     image: "/images/projects/weather-app.jpg",
+  //     category: "Personal",
+  //     year: "2023",
+  //   },
+  //   {
+  //     title: "Markdown Editor",
+  //     description:
+  //       "A real-time markdown editor with syntax highlighting, preview mode, and local storage integration.",
+  //     tech: ["React", "CodeMirror", "LocalStorage API", "Marked"],
+  //     link: "/projects/markdown",
+  //     github: "https://github.com/user/markdown-editor",
+  //     image: "/images/projects/markdown-editor.jpg",
+  //     category: "Personal",
+  //     year: "2023",
+  //   },
+  //   {
+  //     title: "Recipe App",
+  //     description:
+  //       "A recipe discovery and management app with user authentication, favorites, and meal planning features.",
+  //     tech: ["React Native", "Firebase", "Redux", "Expo"],
+  //     link: "/projects/recipe-app",
+  //     github: "https://github.com/user/recipe-app",
+  //     image: "/images/projects/recipe-app.jpg",
+  //     category: "Personal",
+  //     year: "2022",
+  //   },
 ];
 
 // Non-profit projects
 const nonProfitProjects: Project[] = [
   {
-    title: "Community Garden Tracker",
+    title: "BibleQuiz App",
     description:
-      "A volunteer management and garden plot tracking system for urban community gardens.",
-    tech: ["React", "Firebase", "Google Maps API", "Bootstrap"],
-    link: "/projects/garden-tracker",
-    github: "https://github.com/user/garden-tracker",
-    image: "/images/projects/garden-tracker.jpg",
+      "A Next. js app for Bible quizzes, featuring a user-friendly interface and real-time score tracking.",
+    tech: ["Next.js", "TypeScript", "Firebase", "Tailwind CSS"],
+    link: "https://epsu-dv-bible-trivia-bowl.vercel.app",
+    github: "https://github.com/jasper-tech/EPSU-DV-Bible-Trivia-Bowl",
+    image: "/images/projects/epsu-dv-bible-quiz-app.jpg",
     category: "Non-profit",
-    year: "2024",
+    featured: true,
+    year: "2025",
   },
-  {
-    title: "Donation Platform",
-    description:
-      "A secure donation platform with recurring payment options, tax receipt generation, and donor management.",
-    tech: ["Next.js", "Stripe API", "PostgreSQL", "Prisma"],
-    link: "/projects/donation-platform",
-    github: "https://github.com/user/donation-platform",
-    image: "/images/projects/donation-platform.jpg",
-    category: "Non-profit",
-    year: "2023",
-  },
-  {
-    title: "Volunteer Management System",
-    description:
-      "A comprehensive volunteer scheduling, hours tracking, and reporting system for non-profit organizations.",
-    tech: ["Angular", "Node.js", "MongoDB", "Bootstrap"],
-    link: "/projects/volunteer-system",
-    github: "https://github.com/user/volunteer-system",
-    image: "/images/projects/volunteer-system.jpg",
-    category: "Non-profit",
-    year: "2023",
-  },
-  {
-    title: "Educational Resources Portal",
-    description:
-      "A centralized platform for free educational resources including lessons, videos, and interactive materials.",
-    tech: ["Vue.js", "Laravel", "MySQL", "AWS S3"],
-    link: "/projects/edu-resources",
-    github: "https://github.com/user/edu-resources",
-    image: "/images/projects/edu-portal.jpg",
-    category: "Non-profit",
-    year: "2022",
-  },
-  {
-    title: "Wildlife Conservation Map",
-    description:
-      "An interactive map visualizing wildlife conservation efforts and endangered species data.",
-    tech: ["JavaScript", "Leaflet.js", "D3.js", "Python"],
-    link: "/projects/conservation-map",
-    github: "https://github.com/user/conservation-map",
-    image: "/images/projects/conservation-map.jpg",
-    category: "Non-profit",
-    year: "2022",
-  },
+  //   {
+  //     title: "Donation Platform",
+  //     description:
+  //       "A secure donation platform with recurring payment options, tax receipt generation, and donor management.",
+  //     tech: ["Next.js", "Stripe API", "PostgreSQL", "Prisma"],
+  //     link: "/projects/donation-platform",
+  //     github: "https://github.com/user/donation-platform",
+  //     image: "/images/projects/donation-platform.jpg",
+  //     category: "Non-profit",
+  //     year: "2023",
+  //   },
+  //   {
+  //     title: "Volunteer Management System",
+  //     description:
+  //       "A comprehensive volunteer scheduling, hours tracking, and reporting system for non-profit organizations.",
+  //     tech: ["Angular", "Node.js", "MongoDB", "Bootstrap"],
+  //     link: "/projects/volunteer-system",
+  //     github: "https://github.com/user/volunteer-system",
+  //     image: "/images/projects/volunteer-system.jpg",
+  //     category: "Non-profit",
+  //     year: "2023",
+  //   },
+  //   {
+  //     title: "Educational Resources Portal",
+  //     description:
+  //       "A centralized platform for free educational resources including lessons, videos, and interactive materials.",
+  //     tech: ["Vue.js", "Laravel", "MySQL", "AWS S3"],
+  //     link: "/projects/edu-resources",
+  //     github: "https://github.com/user/edu-resources",
+  //     image: "/images/projects/edu-portal.jpg",
+  //     category: "Non-profit",
+  //     year: "2022",
+  //   },
+  //   {
+  //     title: "Wildlife Conservation Map",
+  //     description:
+  //       "An interactive map visualizing wildlife conservation efforts and endangered species data.",
+  //     tech: ["JavaScript", "Leaflet.js", "D3.js", "Python"],
+  //     link: "/projects/conservation-map",
+  //     github: "https://github.com/user/conservation-map",
+  //     image: "/images/projects/conservation-map.jpg",
+  //     category: "Non-profit",
+  //     year: "2022",
+  //   },
 ];
 
 // Combine all projects

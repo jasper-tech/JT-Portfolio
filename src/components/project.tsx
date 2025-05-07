@@ -16,13 +16,13 @@ interface ProjectsSectionProps {}
 
 const projects: Project[] = [
   {
-    title: "E-commerce App",
+    title: "BibleQuiz App",
     description:
-      "A full-stack e-commerce platform with secure authentication, real-time payments, and product management.",
-    tech: ["React", "Node.js", "Tailwind CSS"],
-    link: "/projects/ecommerce",
-    github: "https://github.com/user/ecommerce",
-    image: "/images/projects/ecommerce-app.jpg",
+      "A Next. js app for Bible quizzes, featuring a user-friendly interface and real-time score tracking.",
+    tech: ["Next.js", "TypeScript", "Firebase", "Tailwind CSS"],
+    link: "https://epsu-dv-bible-trivia-bowl.vercel.app",
+    github: "https://github.com/jasper-tech/EPSU-DV-Bible-Trivia-Bowl",
+    image: "/images/projects/epsu-dv-bible-quiz-app.jpg",
   },
   {
     title: "Task Manager",
@@ -70,6 +70,7 @@ const ProjectsSection: FC<ProjectsSectionProps> = () => {
   const techBadgeColors: { [key: string]: string } = {
     React: "bg-blue-100 text-blue-700",
     "Node.js": "bg-green-100 text-green-700",
+    Firebase: "bg-amber-100 text-amber-700",
     "Tailwind CSS": "bg-cyan-100 text-cyan-700",
     "Next.js": "bg-black text-white",
     TypeScript: "bg-blue-100 text-blue-700",
