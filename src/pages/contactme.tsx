@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { motion } from "framer-motion";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { Mail, Send } from "lucide-react";
 
-export default function ContactMe() {
-  const [submitted, setSubmitted] = useState(false);
+interface ContactFormValues {
+  name: string;
+  email: string;
+  message: string;
+}
 
-  const initialValues = {
+const ContactMe: FC = () => {
+  const [submitted, setSubmitted] = useState<boolean>(false);
+
+  const initialValues: ContactFormValues = {
     name: "",
     email: "",
     message: "",
@@ -23,7 +29,10 @@ export default function ContactMe() {
       .required("Message is required"),
   });
 
-  const handleSubmit = (values: any, { resetForm }: any) => {
+  const handleSubmit = (
+    values: ContactFormValues,
+    { resetForm }: FormikHelpers<ContactFormValues>
+  ): void => {
     console.log("Form Data:", values);
     setSubmitted(true);
     resetForm();
@@ -130,4 +139,6 @@ export default function ContactMe() {
       </div>
     </motion.div>
   );
-}
+};
+
+export default ContactMe;

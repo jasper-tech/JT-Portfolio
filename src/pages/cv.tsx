@@ -1,7 +1,12 @@
+import { FC } from "react";
 import { Download } from "lucide-react";
 
-export default function CV() {
-  const handleDownload = () => {
+interface Skill {
+  name: string;
+}
+
+const CV: FC = () => {
+  const handleDownload = (): void => {
     const cvUrl = "/Jasper_CV.pdf";
     const link = document.createElement("a");
     link.href = cvUrl;
@@ -10,6 +15,15 @@ export default function CV() {
     link.click();
     document.body.removeChild(link);
   };
+
+  const skills: Skill[] = [
+    { name: "React.js" },
+    { name: "Next.js" },
+    { name: "Node.js" },
+    { name: "TypeScript" },
+    { name: "Python" },
+    { name: "MongoDB" },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white flex flex-col items-center py-10">
@@ -67,19 +81,12 @@ export default function CV() {
           <section>
             <h2 className="text-2xl font-bold border-b pb-2 mb-4">Skills</h2>
             <div className="flex flex-wrap gap-2">
-              {[
-                "React.js",
-                "Next.js",
-                "Node.js",
-                "TypeScript",
-                "Python",
-                "MongoDB",
-              ].map((skill, index) => (
+              {skills.map((skill, index) => (
                 <span
                   key={index}
                   className="px-3 py-1 bg-blue-500 text-white rounded-lg text-sm"
                 >
-                  {skill}
+                  {skill.name}
                 </span>
               ))}
             </div>
@@ -88,4 +95,6 @@ export default function CV() {
       </div>
     </div>
   );
-}
+};
+
+export default CV;

@@ -1,7 +1,17 @@
+import { FC } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-const projects = [
+interface Project {
+  title: string;
+  description: string;
+  tech: string[];
+  link: string;
+}
+
+interface ProjectsSectionProps {}
+
+const projects: Project[] = [
   {
     title: "E-commerce App",
     description:
@@ -25,7 +35,7 @@ const projects = [
   },
 ];
 
-export default function ProjectsSection() {
+const ProjectsSection: FC<ProjectsSectionProps> = () => {
   return (
     <section className="py-20 px-6 bg-gray-100 dark:bg-gray-900">
       <motion.h2
@@ -80,4 +90,6 @@ export default function ProjectsSection() {
       </div>
     </section>
   );
-}
+};
+
+export default ProjectsSection;

@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { FC, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolling, setScrolling] = useState(false);
+interface NavBarProps {}
+
+const NavBar: FC<NavBarProps> = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [scrolling, setScrolling] = useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,4 +58,6 @@ export default function Navbar() {
       )}
     </motion.header>
   );
-}
+};
+
+export default NavBar;

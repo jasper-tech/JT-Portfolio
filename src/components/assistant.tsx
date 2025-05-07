@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { motion } from "framer-motion";
 import { X, HelpCircle } from "lucide-react";
 
-export default function Assistant() {
+interface AssistantProps {}
+
+const Assistant: FC<AssistantProps> = () => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -42,4 +44,6 @@ export default function Assistant() {
       )}
     </div>
   );
-}
+};
+
+export default Assistant;
