@@ -19,7 +19,7 @@ const projects: Project[] = [
     title: "E-commerce App",
     description:
       "A full-stack e-commerce platform with secure authentication, real-time payments, and product management.",
-    tech: ["React", "Node.js", "MongoDB", "Tailwind CSS"],
+    tech: ["React", "Node.js", "Tailwind CSS"],
     link: "/projects/ecommerce",
     github: "https://github.com/user/ecommerce",
     image: "/images/projects/ecommerce-app.jpg",
@@ -28,7 +28,7 @@ const projects: Project[] = [
     title: "Task Manager",
     description:
       "A Next.js and MongoDB-based task management system with role-based access control.",
-    tech: ["Next.js", "MongoDB", "TypeScript", "Material-UI"],
+    tech: ["Next.js", "TypeScript", "Material-UI"],
     link: "/projects/taskmanager",
     github: "https://github.com/user/taskmanager",
     image: "/images/projects/task-manager.jpg",
@@ -37,7 +37,7 @@ const projects: Project[] = [
     title: "AI Chatbot",
     description:
       "An AI-powered chatbot that uses OpenAI's API for natural language understanding and responses.",
-    tech: ["Python", "FastAPI", "OpenAI API", "React"],
+    tech: ["Python", "OpenAI API"],
     link: "/projects/chatbot",
     github: "https://github.com/user/chatbot",
     image: "/images/projects/ai-chatbot.jpg",
@@ -70,7 +70,6 @@ const ProjectsSection: FC<ProjectsSectionProps> = () => {
   const techBadgeColors: { [key: string]: string } = {
     React: "bg-blue-100 text-blue-700",
     "Node.js": "bg-green-100 text-green-700",
-    MongoDB: "bg-green-100 text-green-700",
     "Tailwind CSS": "bg-cyan-100 text-cyan-700",
     "Next.js": "bg-black text-white",
     TypeScript: "bg-blue-100 text-blue-700",
@@ -87,14 +86,14 @@ const ProjectsSection: FC<ProjectsSectionProps> = () => {
   };
 
   return (
-    <section className="py-24 px-6 bg-gradient-to-b from-black to-gray-900">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-16 px-4 bg-gradient-to-b from-black to-gray-900">
+      <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
             Featured Projects
@@ -111,16 +110,16 @@ const ProjectsSection: FC<ProjectsSectionProps> = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 md:px-0"
+          className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-0"
         >
           {projects.map((project, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className="bg-gray-800 bg-opacity-40 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700 hover:border-blue-500 transition-all duration-300 flex flex-col h-full"
+              className="bg-gray-800 bg-opacity-40 backdrop-blur-sm rounded-lg overflow-hidden border border-gray-700 hover:border-blue-500 transition-all duration-300 flex flex-col h-full"
             >
               {/* Project Image */}
-              <div className="w-full h-48 bg-gray-700 overflow-hidden">
+              <div className="w-full h-40 bg-gray-700 overflow-hidden">
                 <img
                   src={project.image || "/images/projects/default-project.jpg"}
                   alt={project.title}
@@ -129,20 +128,20 @@ const ProjectsSection: FC<ProjectsSectionProps> = () => {
               </div>
 
               {/* Project Content */}
-              <div className="p-6 flex flex-col flex-grow">
-                <h3 className="text-xl font-bold text-white mb-2">
+              <div className="p-4 flex flex-col flex-grow">
+                <h3 className="text-lg font-bold text-white mb-2">
                   {project.title}
                 </h3>
-                <p className="text-gray-300 text-sm mb-4 flex-grow">
+                <p className="text-gray-300 text-xs mb-3 flex-grow">
                   {project.description}
                 </p>
 
                 {/* Tech Stack Badges */}
-                <div className="mb-6 flex flex-wrap gap-2">
+                <div className="mb-4 flex flex-wrap gap-1.5">
                   {project.tech.map((tech, i) => (
                     <span
                       key={i}
-                      className={`px-2.5 py-1 rounded-full text-xs font-medium ${getTechBadgeColor(
+                      className={`px-2 py-0.5 rounded-full text-xs font-medium ${getTechBadgeColor(
                         tech
                       )}`}
                     >
@@ -152,12 +151,12 @@ const ProjectsSection: FC<ProjectsSectionProps> = () => {
                 </div>
 
                 {/* Links */}
-                <div className="flex items-center gap-3 mt-auto">
+                <div className="flex items-center gap-2 mt-auto">
                   <Link
                     to={project.link}
-                    className="flex items-center gap-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
+                    className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium transition-colors"
                   >
-                    View Project <ArrowUpRight size={16} />
+                    View Project <ArrowUpRight size={14} />
                   </Link>
 
                   {project.github && (
@@ -165,10 +164,10 @@ const ProjectsSection: FC<ProjectsSectionProps> = () => {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+                      className="p-1.5 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
                       aria-label="View source code on GitHub"
                     >
-                      <Github size={18} className="text-white" />
+                      <Github size={16} className="text-white" />
                     </a>
                   )}
                 </div>
@@ -183,7 +182,7 @@ const ProjectsSection: FC<ProjectsSectionProps> = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           viewport={{ once: true }}
-          className="mt-12 text-center"
+          className="mt-8 text-center"
         >
           <Link
             to="/all-projects"

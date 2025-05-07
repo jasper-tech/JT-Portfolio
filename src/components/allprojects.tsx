@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Github, Search } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
 
-// Project interface from the original component
 interface Project {
   title: string;
   description: string;
@@ -10,12 +9,11 @@ interface Project {
   link: string;
   github?: string;
   image?: string;
-  category: string; // Added category field
-  featured?: boolean; // To identify projects from original component
-  year?: string; // Added year field
+  category: string;
+  featured?: boolean;
+  year?: string;
 }
 
-// Projects from original component, marked as featured
 const featuredProjects: Project[] = [
   {
     title: "E-commerce App",
@@ -216,26 +214,10 @@ const getTechBadgeColor = (tech: string) => {
 // All Projects Page Component
 const AllProjectsPage = () => {
   const [categoryFilter, setCategoryFilter] = useState<string>("All");
-  const [techFilter, setTechFilter] = useState<string>("All");
-  const [searchQuery, setSearchQuery] = useState<string>("");
 
-  // Get all unique tech stacks for filter
-  const allTechStacks = Array.from(
-    new Set(allProjects.flatMap((project) => project.tech))
-  ).sort();
-
-  // Filter projects based on category, tech, and search
+  // Filter projects based on category only
   const filteredProjects = allProjects.filter((project) => {
-    const matchesCategory =
-      categoryFilter === "All" || project.category === categoryFilter;
-    const matchesTech =
-      techFilter === "All" || project.tech.includes(techFilter);
-    const matchesSearch =
-      searchQuery === "" ||
-      project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.description.toLowerCase().includes(searchQuery.toLowerCase());
-
-    return matchesCategory && matchesTech && matchesSearch;
+    return categoryFilter === "All" || project.category === categoryFilter;
   });
 
   // Animation variants
@@ -261,80 +243,46 @@ const AllProjectsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 py-20 px-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 py-12 px-4">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
             All Projects
           </h1>
-          <div className="w-24 h-1 bg-blue-500 mx-auto mb-6"></div>
-          <p className="text-gray-300 max-w-3xl mx-auto text-lg">
+          <div className="w-20 h-1 bg-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-300 max-w-2xl mx-auto text-base">
             A comprehensive collection of my personal and non-profit projects,
             showcasing my technical skills and passion for building innovative
             solutions.
           </p>
         </motion.div>
 
-        {/* Filters */}
+        {/* Filter */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mb-10 bg-gray-800 bg-opacity-40 backdrop-blur-sm rounded-xl p-6 border border-gray-700"
+          className="mb-6 bg-gray-800 bg-opacity-40 backdrop-blur-sm rounded-lg p-4 border border-gray-700"
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Search */}
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search size={18} className="text-gray-400" />
-              </div>
-              <input
-                type="text"
-                placeholder="Search projects..."
-                className="bg-gray-700 border border-gray-600 text-white pl-10 pr-4 py-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-
-            {/* Category Filter */}
-            <div>
-              <label className="block text-gray-400 text-sm mb-1">
+          <div className="flex justify-center">
+            <div className="w-64">
+              <label className="block text-gray-400 text-xs mb-1">
                 Category
               </label>
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="bg-gray-700 border border-gray-600 text-white px-4 py-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="bg-gray-700 border border-gray-600 text-white text-sm px-3 py-1.5 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="All">All Categories</option>
                 <option value="Personal">Personal</option>
                 <option value="Non-profit">Non-profit</option>
-              </select>
-            </div>
-
-            {/* Tech Stack Filter */}
-            <div>
-              <label className="block text-gray-400 text-sm mb-1">
-                Technology
-              </label>
-              <select
-                value={techFilter}
-                onChange={(e) => setTechFilter(e.target.value)}
-                className="bg-gray-700 border border-gray-600 text-white px-4 py-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="All">All Technologies</option>
-                {allTechStacks.map((tech) => (
-                  <option key={tech} value={tech}>
-                    {tech}
-                  </option>
-                ))}
               </select>
             </div>
           </div>
@@ -345,7 +293,7 @@ const AllProjectsPage = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mb-6 text-gray-300"
+          className="mb-4 text-gray-300 text-sm"
         >
           Showing {filteredProjects.length}{" "}
           {filteredProjects.length === 1 ? "project" : "projects"}
@@ -356,55 +304,55 @@ const AllProjectsPage = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {filteredProjects.map((project, index) => (
             <motion.div
               key={index}
               variants={itemVariants}
-              className={`bg-gray-800 bg-opacity-40 backdrop-blur-sm rounded-xl overflow-hidden border ${
+              className={`bg-gray-800 bg-opacity-40 backdrop-blur-sm rounded-lg overflow-hidden border ${
                 project.featured ? "border-blue-500/50" : "border-gray-700"
               } hover:border-blue-500 transition-all duration-300 flex flex-col h-full`}
             >
               {/* Project Image */}
-              <div className="w-full h-48 bg-gray-700 overflow-hidden relative">
+              <div className="w-full h-40 bg-gray-700 overflow-hidden relative">
                 <img
                   src={project.image || "/images/projects/default-project.jpg"}
                   alt={project.title}
                   className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110"
                 />
                 {project.featured && (
-                  <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-md">
+                  <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded">
                     Featured
                   </div>
                 )}
-                <div className="absolute top-2 left-2 bg-gray-900/80 text-white text-xs font-medium px-2 py-1 rounded-md">
+                <div className="absolute top-2 left-2 bg-gray-900/80 text-white text-xs px-2 py-0.5 rounded">
                   {project.category}
                 </div>
               </div>
 
               {/* Project Content */}
-              <div className="p-6 flex flex-col flex-grow">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-bold text-white">
+              <div className="p-4 flex flex-col flex-grow">
+                <div className="flex justify-between items-start mb-1">
+                  <h3 className="text-lg font-bold text-white">
                     {project.title}
                   </h3>
                   {project.year && (
-                    <span className="text-sm text-gray-400">
+                    <span className="text-xs text-gray-400">
                       {project.year}
                     </span>
                   )}
                 </div>
-                <p className="text-gray-300 text-sm mb-4 flex-grow">
+                <p className="text-gray-300 text-xs mb-3 flex-grow">
                   {project.description}
                 </p>
 
                 {/* Tech Stack Badges */}
-                <div className="mb-6 flex flex-wrap gap-2">
+                <div className="mb-4 flex flex-wrap gap-1.5">
                   {project.tech.map((tech, i) => (
                     <span
                       key={i}
-                      className={`px-2.5 py-1 rounded-full text-xs font-medium ${getTechBadgeColor(
+                      className={`px-2 py-0.5 rounded-full text-xs font-medium ${getTechBadgeColor(
                         tech
                       )}`}
                     >
@@ -414,12 +362,12 @@ const AllProjectsPage = () => {
                 </div>
 
                 {/* Links */}
-                <div className="flex items-center gap-3 mt-auto">
+                <div className="flex items-center gap-2 mt-auto">
                   <a
                     href={project.link}
-                    className="flex items-center gap-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
+                    className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium transition-colors"
                   >
-                    View Project <ArrowUpRight size={16} />
+                    View Project <ArrowUpRight size={14} />
                   </a>
 
                   {project.github && (
@@ -427,10 +375,10 @@ const AllProjectsPage = () => {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+                      className="p-1.5 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
                       aria-label="View source code on GitHub"
                     >
-                      <Github size={18} className="text-white" />
+                      <Github size={16} className="text-white" />
                     </a>
                   )}
                 </div>
@@ -444,20 +392,18 @@ const AllProjectsPage = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center py-12"
+            className="text-center py-8"
           >
-            <div className="text-gray-400 text-lg">
-              No projects match your current filters.
+            <div className="text-gray-400 text-base">
+              No projects match your current filter.
             </div>
             <button
               onClick={() => {
                 setCategoryFilter("All");
-                setTechFilter("All");
-                setSearchQuery("");
               }}
-              className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
+              className="mt-3 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
             >
-              Clear Filters
+              Clear Filter
             </button>
           </motion.div>
         )}
@@ -467,11 +413,11 @@ const AllProjectsPage = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-16 text-center"
+          className="mt-10 text-center"
         >
           <a
             href="/"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/20 rounded-lg transition-all duration-300"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/20 rounded-lg transition-all duration-300 text-sm"
           >
             Back to Home
           </a>

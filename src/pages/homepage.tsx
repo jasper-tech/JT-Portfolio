@@ -33,9 +33,9 @@ const HomePage: FC = () => {
       color: "text-green-500",
     },
     {
-      name: "MongoDB",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
-      color: "text-green-600",
+      name: "Python",
+      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+      color: "text-green-300",
     },
     {
       name: "Next.js",
@@ -202,8 +202,8 @@ const HomePage: FC = () => {
 
       {/* Projects Section with updated styling */}
       <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
+        {/* <div className="max-w-9xl mx-auto px-6"> */}
+        {/* <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -215,13 +215,12 @@ const HomePage: FC = () => {
             <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
               A selection of my recent work and personal projects
             </p>
-          </motion.div>
+          </motion.div> */}
 
-          {/* We'll render the ProjectsSection component with custom styling */}
-          <div className="mt-12">
-            <ProjectsSection />
-          </div>
+        <div>
+          <ProjectsSection />
         </div>
+        {/* </div> */}
       </section>
 
       {/* Call to Action */}
