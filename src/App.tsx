@@ -6,6 +6,7 @@ import Layout from "./pages/layout";
 import HomePage from "./pages/homepage";
 import CV from "./pages/cv";
 import ContactMe from "./pages/contactme";
+import AllProjectsPage from "./components/allprojects";
 
 const App: FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: FC = () => {
             <Route index element={<HomePage />} />
             <Route path="cv" element={<CV />} />
             <Route path="contact" element={<ContactMe />} />
+            <Route path="all-projects" element={<AllProjectsPage />} />
           </Route>
         </Routes>
       </Router>
