@@ -40,13 +40,13 @@ const featuredProjects: Project[] = [
   //     year: "2025",
   //   },
   {
-    title: "AI Chatbot",
+    title: " Joey-Assistant Bot",
     description:
-      "An AI-powered chatbot that uses OpenAI's API for natural language understanding and responses.",
-    tech: ["Python", "FastAPI", "OpenAI API", "React"],
+      "An Intermediate level assistant with limited functionalities and responses.",
+    tech: ["Python"],
     link: "/projects/chatbot",
     github: "https://github.com/user/chatbot",
-    image: "/images/projects/ai-chatbot.jpg",
+    image: "/images/projects/joey.png",
     category: "Personal",
     featured: true,
     year: "2023",

@@ -24,23 +24,23 @@ const projects: Project[] = [
     github: "https://github.com/jasper-tech/EPSU-DV-Bible-Trivia-Bowl",
     image: "/images/projects/epsu-dv-bible-quiz-app.jpg",
   },
+  // {
+  //   title: "Task Manager",
+  //   description:
+  //     "A Next.js and MongoDB-based task management system with role-based access control.",
+  //   tech: ["Next.js", "TypeScript", "Material-UI"],
+  //   link: "/projects/taskmanager",
+  //   github: "https://github.com/user/taskmanager",
+  //   image: "/images/projects/task-manager.jpg",
+  // },
   {
-    title: "Task Manager",
+    title: " Joey-Assistant Bot",
     description:
-      "A Next.js and MongoDB-based task management system with role-based access control.",
-    tech: ["Next.js", "TypeScript", "Material-UI"],
-    link: "/projects/taskmanager",
-    github: "https://github.com/user/taskmanager",
-    image: "/images/projects/task-manager.jpg",
-  },
-  {
-    title: "AI Chatbot",
-    description:
-      "An AI-powered chatbot that uses OpenAI's API for natural language understanding and responses.",
-    tech: ["Python", "OpenAI API"],
+      "An Intermediate level assistant with limited functionalities and responses.",
+    tech: ["Python"],
     link: "/projects/chatbot",
-    github: "https://github.com/user/chatbot",
-    image: "/images/projects/ai-chatbot.jpg",
+    github: "https://github.com/jasper-tech/Expiremental-Virtual-Assistant",
+    image: "/images/projects/joey.png",
   },
 ];
 
