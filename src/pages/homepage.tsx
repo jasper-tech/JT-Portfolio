@@ -1,210 +1,22 @@
-import { FC, useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
+import { FC } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import ProjectsSection from "../components/project";
-
-interface Technology {
-  name: string;
-  logo: string;
-  color: string;
-}
+import Hero from "../components/HeroSection";
+import TechStack from "../components/TechStack";
+import Projects from "../components/ProjectSection";
 
 const HomePage: FC = () => {
-  const controls = useAnimation();
-
-  useEffect(() => {
-    controls.start("visible");
-  }, [controls]);
-
-  const technologies: Technology[] = [
-    {
-      name: "React",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-      color: "text-blue-300",
-    },
-    {
-      name: "TypeScript",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-      color: "text-blue-600",
-    },
-    {
-      name: "Node.js",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-      color: "text-green-500",
-    },
-    {
-      name: "Python",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-      color: "text-green-300",
-    },
-    {
-      name: "Next.js",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
-      color: "text-white",
-    },
-    {
-      name: "Firebase",
-      logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
-      color: "text-yellow-500",
-    },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white font-sans">
-      {/* Navigation */}
-      {/* <nav className="fixed top-0 w-full bg-black bg-opacity-80 backdrop-blur-sm z-50 py-4 px-8">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="text-xl font-bold">Sandy Afeawo</div>
-          <div className="hidden md:flex space-x-6">
-            <Link to="/" className="hover:text-blue-400 transition-colors">
-              Home
-            </Link>
-            <Link
-              to="/projects"
-              className="hover:text-blue-400 transition-colors"
-            >
-              Projects
-            </Link>
-            <Link to="/cv" className="hover:text-blue-400 transition-colors">
-              Resume
-            </Link>
-            <Link
-              to="/contact"
-              className="hover:text-blue-400 transition-colors"
-            >
-              Contact
-            </Link>
-          </div>
-        </div>
-      </nav> */}
+      {/* Hero Section - Using the Hero component */}
+      <Hero />
 
-      {/* Hero Section */}
-      <section className="min-h-screen flex items-center pt-16">
-        <div className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
-          >
-            <div className="inline-block px-4 py-1 rounded-full bg-blue-600 bg-opacity-20 text-blue-400 text-sm mb-2">
-              Software Developer
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold leading-tight">
-              Hi, I'm{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-                Sandy Afeawo
-              </span>
-            </h1>
-            <p className="text-xl text-gray-300 max-w-lg">
-              Building elegant solutions to complex problems with modern
-              technologies. Problem Solver and Tech Enthusiast passionate about
-              creating impactful applications.
-            </p>
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Link
-                to="/cv"
-                className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-500 rounded-lg hover:from-blue-500 hover:to-blue-600 transition-all shadow-lg shadow-blue-500/20"
-              >
-                View My Resume
-              </Link>
-              <Link
-                to="/contact"
-                className="px-8 py-3 border border-gray-600 rounded-lg hover:bg-white hover:bg-opacity-10 transition-all"
-              >
-                Contact Me
-              </Link>
-            </div>
-          </motion.div>
+      {/* Tech Stack Section - Using the TechStack component */}
+      <TechStack />
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="hidden md:flex justify-center"
-          >
-            <div className="relative w-80 h-80">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-3xl opacity-20"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                {/* You can add a profile image here */}
-                <div className="w-64 h-64 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-6xl font-bold text-white">
-                  SA
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Tech Stack Section */}
-      <section className="py-20 bg-black bg-opacity-60">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold mb-2">My Tech Stack</h2>
-            <div className="w-20 h-1 bg-blue-500 mx-auto"></div>
-            <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
-              Technologies and tools I'm proficient with and use to build modern
-              web applications
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6"
-          >
-            {technologies.map((tech, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className="flex flex-col items-center bg-gray-800 bg-opacity-50 border border-gray-700 rounded-xl p-6 backdrop-blur-sm hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-1 transition-all"
-              >
-                <img
-                  src={tech.logo}
-                  alt={`${tech.name} logo`}
-                  className="w-14 h-14 mb-4 filter"
-                />
-                <span className={`${tech.color} font-medium`}>{tech.name}</span>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Projects Section with updated styling */}
+      {/* Projects Section */}
       <section className="py-20">
-        <div>
-          <ProjectsSection />
-        </div>
+        <Projects />
       </section>
 
       {/* Call to Action */}
@@ -246,7 +58,9 @@ const HomePage: FC = () => {
             </div>
             <div className="flex space-x-6">
               <a
-                href="https://github.com"
+                href="https://github.com/jasper-tech"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
               >
                 <svg
@@ -264,6 +78,8 @@ const HomePage: FC = () => {
               </a>
               <a
                 href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
               >
                 <svg
@@ -277,6 +93,8 @@ const HomePage: FC = () => {
               </a>
               <a
                 href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition-colors"
               >
                 <svg

@@ -1,131 +1,236 @@
 import { FC, useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
-interface NavBarProps {}
+const navLinks = [
+  { label: "Stack", to: "/#tech" },
+  { label: "Projects", to: "/#projects" },
+  { label: "Resume", to: "/cv" },
+];
 
-const NavBar: FC<NavBarProps> = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [scrolling, setScrolling] = useState<boolean>(false);
+const NavBar: FC = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolling(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const navLinks = [
-    { to: "/", label: "Home" },
-    { to: "/projects", label: "Projects" },
-    { to: "/cv", label: "Resume" },
-    { to: "/contact", label: "Contact" },
-  ];
+  const handleAnchor = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    if (href.startsWith("/#")) {
+      e.preventDefault();
+      const id = href.slice(2);
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      setOpen(false);
+    }
+  };
 
   return (
-    <motion.header
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolling
-          ? "bg-black bg-opacity-80 backdrop-blur-md py-3 shadow-lg shadow-blue-900/10"
-          : "bg-transparent py-5"
-      }`}
-    >
-      <div className="container mx-auto flex items-center justify-between px-6">
-        <Link to="/" className="relative group">
-          <span className="text-2xl font-bold text-white">Sandy Afeawo</span>
-          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 transition-all duration-300 group-hover:w-full"></span>
+    <>
+      <motion.nav
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0 3rem",
+          height: "64px",
+          background: scrolled ? "rgba(6,10,7,0.95)" : "rgba(6,10,7,0.6)",
+          backdropFilter: "blur(12px)",
+          borderBottom: "1px solid rgba(0,255,136,0.2)",
+          transition: "background 0.3s",
+        }}
+      >
+        {/* Logo */}
+        <Link
+          to="/"
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "1rem",
+            fontWeight: 700,
+            color: "var(--green)",
+            letterSpacing: "0.12em",
+            textDecoration: "none",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
+          <span style={{ animation: "pulse 2s ease-in-out infinite" }}>◈</span>
+          Sandy Afeawo
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          {navLinks.map((link, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 * index }}
+        {/* Desktop links */}
+        <div
+          style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}
+          className="desktop-nav"
+        >
+          {navLinks.map((link) => (
+            <motion.a
+              key={link.label}
+              href={link.to}
+              onClick={(e) => handleAnchor(e, link.to)}
               whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.95 }}
+              style={{
+                fontFamily: "var(--font-ui)",
+                fontSize: "0.9rem",
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "var(--ivory-muted)",
+                textDecoration: "none",
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.color = "var(--green)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.color = "var(--ivory-muted)")
+              }
             >
-              <Link
-                to={link.to}
-                className="text-gray-300 hover:text-white font-medium relative group"
-              >
-                {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-            </motion.div>
+              {link.label}
+            </motion.a>
           ))}
-
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <motion.div whileHover={{ scale: 1.03 }}>
             <Link
               to="/contact"
-              className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-400 hover:to-blue-500 transition-all shadow-md shadow-blue-500/20"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "0.7rem",
+                fontWeight: 700,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                padding: "7px 20px",
+                background: "transparent",
+                color: "var(--green)",
+                border: "1px solid var(--green)",
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                transition: "background 0.2s, box-shadow 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(0,255,136,0.1)";
+                e.currentTarget.style.boxShadow =
+                  "0 0 20px rgba(0,255,136,0.2)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.boxShadow = "none";
+              }}
             >
               Get In Touch
             </Link>
           </motion.div>
-        </nav>
+        </div>
 
-        {/* Mobile Menu Button */}
+        {/* Hamburger */}
         <button
-          className="md:hidden p-2 rounded-lg focus:outline-none text-white"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setOpen(!open)}
+          style={{
+            display: "none",
+            background: "none",
+            border: "none",
+            color: "var(--green)",
+            cursor: "pointer",
+            padding: "4px",
+          }}
+          className="hamburger-btn"
           aria-label="Toggle menu"
         >
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {open ? <X size={22} /> : <Menu size={22} />}
         </button>
-      </div>
+      </motion.nav>
 
-      {/* Mobile Navigation */}
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden bg-gray-900 border-t border-gray-800"
-        >
-          <div className="container mx-auto py-4 px-6 flex flex-col space-y-4">
-            {navLinks.map((link, index) => (
-              <motion.div
-                key={index}
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.05 * index }}
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            style={{
+              position: "fixed",
+              top: "64px",
+              left: 0,
+              right: 0,
+              zIndex: 999,
+              background: "rgba(6,10,7,0.98)",
+              borderBottom: "1px solid rgba(0,255,136,0.2)",
+              padding: "1.5rem 2rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+            }}
+          >
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.to}
+                onClick={(e) => handleAnchor(e, link.to)}
+                style={{
+                  fontFamily: "var(--font-ui)",
+                  fontWeight: 600,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  fontSize: "1rem",
+                  color: "var(--ivory-muted)",
+                  textDecoration: "none",
+                  padding: "0.5rem 0",
+                  borderBottom: "1px solid rgba(0,255,136,0.15)",
+                }}
               >
-                <Link
-                  to={link.to}
-                  className="block py-2 text-gray-300 hover:text-white font-medium"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              </motion.div>
+                {link.label}
+              </a>
             ))}
-            <motion.div
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.25 }}
-              className="pt-2"
+            <Link
+              to="/contact"
+              onClick={() => setOpen(false)}
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                padding: "12px",
+                background: "var(--green)",
+                color: "var(--bg)",
+                textDecoration: "none",
+                display: "block",
+                textAlign: "center",
+                marginTop: "0.5rem",
+              }}
             >
-              <Link
-                to="/contact"
-                className="inline-block w-full py-3 text-center bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg"
-                onClick={() => setIsOpen(false)}
-              >
-                Get In Touch
-              </Link>
-            </motion.div>
-          </div>
-        </motion.div>
-      )}
-    </motion.header>
+              Get In Touch
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Responsive styles injected */}
+      <style>{`
+        @media (max-width: 768px) {
+          .desktop-nav { display: none !important; }
+          .hamburger-btn { display: block !important; }
+          nav { padding: 0 1.5rem !important; }
+        }
+      `}</style>
+    </>
   );
 };
 
