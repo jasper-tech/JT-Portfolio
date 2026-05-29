@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Github } from "lucide-react";
+import { ArrowUpRight, Github, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Project {
   title: string;
   description: string;
   tech: string[];
-  link: string;
+  link?: string;
   github?: string;
   image?: string;
   category: string;
@@ -14,99 +15,32 @@ interface Project {
   year?: string;
 }
 
-const featuredProjects: Project[] = [
+const allProjects: Project[] = [
   {
     title: "E-commerce App",
     description:
       "A full-stack e-commerce platform with secure authentication, real-time payments, and product management.",
     tech: ["React", "Node.js", "MongoDB", "Tailwind CSS"],
-    link: "/projects/ecommerce",
     github: "https://github.com/user/ecommerce",
     image: "/images/projects/ecommerce-app.jpg",
     category: "Personal",
     featured: true,
     year: "2024",
   },
-  //   {
-  //     title: "BibleQuiz App",
-  //     description:
-  //       "A Next. js app for Bible quizzes, featuring a user-friendly interface and real-time score tracking.",
-  //     tech: ["Next.js", "TypeScript", "Firebase", "Tailwind CSS"],
-  //     link: "https://epsu-dv-bible-trivia-bowl.vercel.app",
-  //     github: "https://github.com/jasper-tech/EPSU-DV-Bible-Trivia-Bowl",
-  //     image: "/images/projects/epsu-dv-bible-quiz-app.jpg",
-  //     category: "none",
-  //     featured: true,
-  //     year: "2025",
-  //   },
   {
-    title: " Joey-Assistant Bot",
+    title: "Joey Assistant Bot",
     description:
-      "An Intermediate level assistant with limited functionalities and responses.",
+      "An intermediate-level AI assistant with smart functionalities, conversational responses, and task automation.",
     tech: ["Python"],
-    link: "/projects/chatbot",
-    github: "https://github.com/user/chatbot",
+    github: "https://github.com/jasper-tech/Expiremental-Virtual-Assistant",
     image: "/images/projects/joey.png",
     category: "Personal",
-    featured: true,
     year: "2023",
   },
-];
-
-// Additional personal projects
-const additionalPersonalProjects: Project[] = [
-  //   {
-  //     title: "Portfolio Website",
-  //     description:
-  //       "My personal portfolio website built with React and Three.js for interactive 3D elements.",
-  //     tech: ["React", "Three.js", "Framer Motion", "Tailwind CSS"],
-  //     link: "/",
-  //     github: "https://github.com/user/portfolio",
-  //     image: "/images/projects/portfolio.jpg",
-  //     category: "Personal",
-  //     year: "2024",
-  //   },
-  //   {
-  //     title: "Weather Dashboard",
-  //     description:
-  //       "A responsive weather application with 7-day forecasts, animated weather conditions, and location search.",
-  //     tech: ["Vue.js", "OpenWeather API", "Chart.js", "SCSS"],
-  //     link: "/projects/weather",
-  //     github: "https://github.com/user/weather-app",
-  //     image: "/images/projects/weather-app.jpg",
-  //     category: "Personal",
-  //     year: "2023",
-  //   },
-  //   {
-  //     title: "Markdown Editor",
-  //     description:
-  //       "A real-time markdown editor with syntax highlighting, preview mode, and local storage integration.",
-  //     tech: ["React", "CodeMirror", "LocalStorage API", "Marked"],
-  //     link: "/projects/markdown",
-  //     github: "https://github.com/user/markdown-editor",
-  //     image: "/images/projects/markdown-editor.jpg",
-  //     category: "Personal",
-  //     year: "2023",
-  //   },
-  //   {
-  //     title: "Recipe App",
-  //     description:
-  //       "A recipe discovery and management app with user authentication, favorites, and meal planning features.",
-  //     tech: ["React Native", "Firebase", "Redux", "Expo"],
-  //     link: "/projects/recipe-app",
-  //     github: "https://github.com/user/recipe-app",
-  //     image: "/images/projects/recipe-app.jpg",
-  //     category: "Personal",
-  //     year: "2022",
-  //   },
-];
-
-// Non-profit projects
-const nonProfitProjects: Project[] = [
   {
     title: "BibleQuiz App",
     description:
-      "A Next. js app for Bible quizzes, featuring a user-friendly interface and real-time score tracking.",
+      "A Next.js app for Bible quizzes, featuring a user-friendly interface and real-time score tracking.",
     tech: ["Next.js", "TypeScript", "Firebase", "Tailwind CSS"],
     link: "https://epsu-dv-bible-trivia-bowl.vercel.app",
     github: "https://github.com/jasper-tech/EPSU-DV-Bible-Trivia-Bowl",
@@ -115,316 +49,379 @@ const nonProfitProjects: Project[] = [
     featured: true,
     year: "2025",
   },
-  //   {
-  //     title: "Donation Platform",
-  //     description:
-  //       "A secure donation platform with recurring payment options, tax receipt generation, and donor management.",
-  //     tech: ["Next.js", "Stripe API", "PostgreSQL", "Prisma"],
-  //     link: "/projects/donation-platform",
-  //     github: "https://github.com/user/donation-platform",
-  //     image: "/images/projects/donation-platform.jpg",
-  //     category: "Non-profit",
-  //     year: "2023",
-  //   },
-  //   {
-  //     title: "Volunteer Management System",
-  //     description:
-  //       "A comprehensive volunteer scheduling, hours tracking, and reporting system for non-profit organizations.",
-  //     tech: ["Angular", "Node.js", "MongoDB", "Bootstrap"],
-  //     link: "/projects/volunteer-system",
-  //     github: "https://github.com/user/volunteer-system",
-  //     image: "/images/projects/volunteer-system.jpg",
-  //     category: "Non-profit",
-  //     year: "2023",
-  //   },
-  //   {
-  //     title: "Educational Resources Portal",
-  //     description:
-  //       "A centralized platform for free educational resources including lessons, videos, and interactive materials.",
-  //     tech: ["Vue.js", "Laravel", "MySQL", "AWS S3"],
-  //     link: "/projects/edu-resources",
-  //     github: "https://github.com/user/edu-resources",
-  //     image: "/images/projects/edu-portal.jpg",
-  //     category: "Non-profit",
-  //     year: "2022",
-  //   },
-  //   {
-  //     title: "Wildlife Conservation Map",
-  //     description:
-  //       "An interactive map visualizing wildlife conservation efforts and endangered species data.",
-  //     tech: ["JavaScript", "Leaflet.js", "D3.js", "Python"],
-  //     link: "/projects/conservation-map",
-  //     github: "https://github.com/user/conservation-map",
-  //     image: "/images/projects/conservation-map.jpg",
-  //     category: "Non-profit",
-  //     year: "2022",
-  //   },
 ];
 
-// Combine all projects
-const allProjects: Project[] = [
-  ...featuredProjects,
-  ...additionalPersonalProjects,
-  ...nonProfitProjects,
-];
+const Tag: React.FC<{ label: string }> = ({ label }) => (
+  <span
+    style={{
+      fontFamily: "var(--font-mono)",
+      fontSize: "0.65rem",
+      padding: "3px 10px",
+      border: "1px solid var(--border)",
+      color: "var(--green-dim)",
+      background: "var(--green-glow2)",
+      letterSpacing: "0.06em",
+    }}
+  >
+    {label}
+  </span>
+);
 
-// Tech badge colors from the original component
-const techBadgeColors: { [key: string]: string } = {
-  React: "bg-blue-100 text-blue-700",
-  "Node.js": "bg-green-100 text-green-700",
-  MongoDB: "bg-green-100 text-green-700",
-  "Tailwind CSS": "bg-cyan-100 text-cyan-700",
-  "Next.js": "bg-black text-white",
-  TypeScript: "bg-blue-100 text-blue-700",
-  "Material-UI": "bg-indigo-100 text-indigo-700",
-  Python: "bg-yellow-100 text-yellow-700",
-  FastAPI: "bg-green-100 text-green-700",
-  "OpenAI API": "bg-purple-100 text-purple-700",
-  "Three.js": "bg-red-100 text-red-700",
-  "Framer Motion": "bg-purple-100 text-purple-700",
-  "Vue.js": "bg-emerald-100 text-emerald-700",
-  "Chart.js": "bg-pink-100 text-pink-700",
-  SCSS: "bg-pink-100 text-pink-700",
-  CodeMirror: "bg-gray-100 text-gray-700",
-  Marked: "bg-orange-100 text-orange-700",
-  "React Native": "bg-blue-100 text-blue-700",
-  Firebase: "bg-amber-100 text-amber-700",
-  Redux: "bg-purple-100 text-purple-700",
-  Expo: "bg-gray-100 text-gray-700",
-  "Google Maps API": "bg-red-100 text-red-700",
-  Bootstrap: "bg-purple-100 text-purple-700",
-  "Stripe API": "bg-blue-100 text-blue-700",
-  PostgreSQL: "bg-blue-100 text-blue-700",
-  Prisma: "bg-teal-100 text-teal-700",
-  Angular: "bg-red-100 text-red-700",
-  //   "Vue.js": "bg-green-100 text-green-700",
-  Laravel: "bg-red-100 text-red-700",
-  MySQL: "bg-blue-100 text-blue-700",
-  "AWS S3": "bg-orange-100 text-orange-700",
-  JavaScript: "bg-yellow-100 text-yellow-700",
-  "Leaflet.js": "bg-green-100 text-green-700",
-  "D3.js": "bg-orange-100 text-orange-700",
-  // Default color for any unlisted technologies
-  default: "bg-gray-100 text-gray-700",
-};
-
-const getTechBadgeColor = (tech: string) => {
-  return techBadgeColors[tech] || techBadgeColors.default;
-};
-
-// All Projects Page Component
 const AllProjectsPage = () => {
-  const [categoryFilter, setCategoryFilter] = useState<string>("All");
+  const [category, setCategory] = useState("All");
 
-  // Filter projects based on category only
-  const filteredProjects = allProjects.filter((project) => {
-    return categoryFilter === "All" || project.category === categoryFilter;
-  });
+  const filtered = allProjects.filter(
+    (p) => category === "All" || p.category === category
+  );
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
+  const categories = ["All", "Personal", "Non-profit"];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 py-12 px-4">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-8"
-        >
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
-            All Projects
-          </h1>
-          <div className="w-20 h-1 bg-blue-500 mx-auto mb-4"></div>
-          <p className="text-gray-300 max-w-2xl mx-auto text-base">
-            A comprehensive collection of my personal and non-profit projects,
-            showcasing my technical skills and passion for building innovative
-            solutions.
-          </p>
-        </motion.div>
+    <section
+      style={{
+        padding: "8rem 3rem 6rem",
+        minHeight: "100vh",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      {/* Header */}
+      <motion.div
+        className="sec-header"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="sec-label">Portfolio</div>
+        <h2 className="sec-title">All Projects</h2>
+        <p className="sec-desc">
+          A comprehensive collection of personal and non-profit work
+        </p>
+      </motion.div>
 
-        {/* Filter */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mb-6 bg-gray-800 bg-opacity-40 backdrop-blur-sm rounded-lg p-4 border border-gray-700"
-        >
-          <div className="flex justify-center">
-            <div className="w-64">
-              <label className="block text-gray-400 text-xs mb-1">
-                Category
-              </label>
-              <select
-                value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value)}
-                className="bg-gray-700 border border-gray-600 text-white text-sm px-3 py-1.5 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="All">All Categories</option>
-                <option value="Personal">Personal</option>
-                <option value="Non-profit">Non-profit</option>
-              </select>
-            </div>
-          </div>
-        </motion.div>
+      {/* Category filter */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.15 }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "0.75rem",
+          marginBottom: "3rem",
+          flexWrap: "wrap",
+        }}
+      >
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setCategory(cat)}
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.72rem",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              padding: "6px 20px",
+              background: category === cat ? "var(--green)" : "transparent",
+              color: category === cat ? "var(--bg)" : "var(--ivory-muted)",
+              border: `1px solid ${
+                category === cat ? "var(--green)" : "var(--border)"
+              }`,
+              cursor: "pointer",
+              transition: "all 0.2s",
+            }}
+            onMouseEnter={(e) => {
+              if (category !== cat) {
+                e.currentTarget.style.borderColor = "var(--green)";
+                e.currentTarget.style.color = "var(--green)";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (category !== cat) {
+                e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.color = "var(--ivory-muted)";
+              }
+            }}
+          >
+            {cat}
+          </button>
+        ))}
+      </motion.div>
 
-        {/* Results Count */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mb-4 text-gray-300 text-sm"
-        >
-          Showing {filteredProjects.length}{" "}
-          {filteredProjects.length === 1 ? "project" : "projects"}
-        </motion.div>
+      {/* Count */}
+      <div
+        style={{
+          maxWidth: 1100,
+          margin: "0 auto",
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.7rem",
+          color: "var(--ivory-muted)",
+          letterSpacing: "0.08em",
+          marginBottom: "1.5rem",
+        }}
+      >
+        Showing {filtered.length}{" "}
+        {filtered.length === 1 ? "project" : "projects"}
+      </div>
 
-        {/* Projects Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {filteredProjects.map((project, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              className={`bg-gray-800 bg-opacity-40 backdrop-blur-sm rounded-lg overflow-hidden border ${
-                project.featured ? "border-blue-500/50" : "border-gray-700"
-              } hover:border-blue-500 transition-all duration-300 flex flex-col h-full`}
+      {/* Grid */}
+      <div
+        style={{
+          maxWidth: 1100,
+          margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          gap: "1.5rem",
+        }}
+      >
+        {filtered.map((project, i) => (
+          <motion.div
+            key={project.title}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: i * 0.08 }}
+            whileHover={{ y: -4, borderColor: "rgba(0,255,136,0.5)" }}
+            style={{
+              background: "var(--panel)",
+              border: "1px solid var(--border)",
+              overflow: "hidden",
+              display: "flex",
+              flexDirection: "column",
+              transition: "border-color 0.3s",
+            }}
+          >
+            {/* Image */}
+            <div
+              style={{
+                width: "100%",
+                height: 170,
+                overflow: "hidden",
+                position: "relative",
+                background: "linear-gradient(135deg, #0a1810, #062210)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              {/* Project Image */}
-              <div className="w-full h-40 bg-gray-700 overflow-hidden relative">
+              {project.image && (
                 <img
-                  src={project.image || "/images/projects/default-project.jpg"}
+                  src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    filter: "saturate(0.7) brightness(0.85)",
+                  }}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = "none";
+                  }}
                 />
-                {project.featured && (
-                  <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded">
-                    Featured
-                  </div>
-                )}
-                <div className="absolute top-2 left-2 bg-gray-900/80 text-white text-xs px-2 py-0.5 rounded">
+              )}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(to bottom, transparent 40%, rgba(13,20,16,0.85) 100%)",
+                }}
+              />
+              {project.year && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: 10,
+                    right: 10,
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.68rem",
+                    color: "var(--green)",
+                    background: "rgba(6,10,7,0.85)",
+                    border: "1px solid var(--border)",
+                    padding: "2px 8px",
+                  }}
+                >
+                  {project.year}
+                </span>
+              )}
+              {project.featured && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: 10,
+                    left: 10,
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.65rem",
+                    color: "var(--bg)",
+                    background: "var(--green)",
+                    padding: "2px 8px",
+                    letterSpacing: "0.08em",
+                  }}
+                >
+                  FEATURED
+                </span>
+              )}
+            </div>
+
+            {/* Body */}
+            <div
+              style={{
+                padding: "1.25rem",
+                display: "flex",
+                flexDirection: "column",
+                flex: 1,
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  marginBottom: "0.4rem",
+                }}
+              >
+                <h3
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "0.92rem",
+                    fontWeight: 700,
+                    color: "var(--ivory)",
+                    letterSpacing: "0.06em",
+                  }}
+                >
+                  {project.title}
+                </h3>
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.65rem",
+                    color: "var(--green-dark)",
+                    letterSpacing: "0.06em",
+                    whiteSpace: "nowrap",
+                    marginLeft: 8,
+                  }}
+                >
                   {project.category}
-                </div>
+                </span>
               </div>
-
-              {/* Project Content */}
-              <div className="p-4 flex flex-col flex-grow">
-                <div className="flex justify-between items-start mb-1">
-                  <h3 className="text-lg font-bold text-white">
-                    {project.title}
-                  </h3>
-                  {project.year && (
-                    <span className="text-xs text-gray-400">
-                      {project.year}
-                    </span>
-                  )}
-                </div>
-                <p className="text-gray-300 text-xs mb-3 flex-grow">
-                  {project.description}
-                </p>
-
-                {/* Tech Stack Badges */}
-                <div className="mb-4 flex flex-wrap gap-1.5">
-                  {project.tech.map((tech, i) => (
-                    <span
-                      key={i}
-                      className={`px-2 py-0.5 rounded-full text-xs font-medium ${getTechBadgeColor(
-                        tech
-                      )}`}
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Links */}
-                <div className="flex items-center gap-2 mt-auto">
+              <p
+                style={{
+                  fontSize: "0.85rem",
+                  color: "var(--ivory-muted)",
+                  lineHeight: 1.7,
+                  marginBottom: "1rem",
+                  flex: 1,
+                }}
+              >
+                {project.description}
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 6,
+                  marginBottom: "1rem",
+                }}
+              >
+                {project.tech.map((t) => (
+                  <Tag key={t} label={t} />
+                ))}
+              </div>
+              <div style={{ display: "flex", gap: 8, marginTop: "auto" }}>
+                {project.link && (
                   <a
                     href={project.link}
-                    className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-medium transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      fontFamily: "var(--font-ui)",
+                      fontSize: "0.75rem",
+                      fontWeight: 600,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      textDecoration: "none",
+                      padding: "6px 14px",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 5,
+                      color: "var(--bg)",
+                      background: "var(--green)",
+                      border: "1px solid var(--green)",
+                    }}
                   >
-                    View Project <ArrowUpRight size={14} />
+                    <ArrowUpRight size={12} /> Live Demo
                   </a>
-
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-1.5 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
-                      aria-label="View source code on GitHub"
-                    >
-                      <Github size={16} className="text-white" />
-                    </a>
-                  )}
-                </div>
+                )}
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      fontFamily: "var(--font-ui)",
+                      fontSize: "0.75rem",
+                      fontWeight: 600,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      textDecoration: "none",
+                      padding: "6px 14px",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 5,
+                      color: "var(--ivory-muted)",
+                      background: "transparent",
+                      border: "1px solid var(--border)",
+                      transition: "color 0.2s, border-color 0.2s",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = "var(--green)";
+                      e.currentTarget.style.borderColor = "var(--green)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = "var(--ivory-muted)";
+                      e.currentTarget.style.borderColor = "var(--border)";
+                    }}
+                  >
+                    <Github size={12} /> GitHub
+                  </a>
+                )}
               </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* No Results Message */}
-        {filteredProjects.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-8"
-          >
-            <div className="text-gray-400 text-base">
-              No projects match your current filter.
             </div>
-            <button
-              onClick={() => {
-                setCategoryFilter("All");
-              }}
-              className="mt-3 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
-            >
-              Clear Filter
-            </button>
           </motion.div>
-        )}
-
-        {/* Back to Home Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-10 text-center"
-        >
-          <a
-            href="/"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/20 rounded-lg transition-all duration-300 text-sm"
-          >
-            Back to Home
-          </a>
-        </motion.div>
+        ))}
       </div>
-    </div>
+
+      {filtered.length === 0 && (
+        <div
+          style={{
+            textAlign: "center",
+            padding: "4rem",
+            fontFamily: "var(--font-mono)",
+            color: "var(--ivory-muted)",
+            fontSize: "0.85rem",
+          }}
+        >
+          No projects match the selected filter.
+        </div>
+      )}
+
+      {/* Back */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        style={{ textAlign: "center", marginTop: "3rem" }}
+      >
+        <Link to="/" className="btn-outline">
+          <ArrowLeft size={14} /> Back to Home
+        </Link>
+      </motion.div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          section { padding: 7rem 1.5rem 4rem !important; }
+        }
+      `}</style>
+    </section>
   );
 };
 
