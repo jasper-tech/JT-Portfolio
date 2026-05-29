@@ -1,5 +1,5 @@
 import { FC, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
@@ -12,6 +12,8 @@ const navLinks = [
 const NavBar: FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -19,15 +21,38 @@ const NavBar: FC = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // After navigating to "/", scroll to the target section
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const scrollTo = params.get("scrollTo");
+    if (scrollTo && location.pathname === "/") {
+      // Small delay to let the page render its sections first
+      const timer = setTimeout(() => {
+        document
+          .getElementById(scrollTo)
+          ?.scrollIntoView({ behavior: "smooth" });
+        // Clean up the query param without adding a history entry
+        navigate("/", { replace: true });
+      }, 80);
+      return () => clearTimeout(timer);
+    }
+  }, [location, navigate]);
+
   const handleAnchor = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
   ) => {
-    if (href.startsWith("/#")) {
-      e.preventDefault();
-      const id = href.slice(2);
+    if (!href.startsWith("/#")) return;
+    e.preventDefault();
+    const id = href.slice(2);
+    setOpen(false);
+
+    if (location.pathname === "/") {
+      // Already on homepage — just scroll
       document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-      setOpen(false);
+    } else {
+      // Navigate to homepage with the section as a query param
+      navigate(`/?scrollTo=${id}`);
     }
   };
 
@@ -50,7 +75,7 @@ const NavBar: FC = () => {
           height: "64px",
           background: scrolled ? "rgba(6,10,7,0.95)" : "rgba(6,10,7,0.6)",
           backdropFilter: "blur(12px)",
-          borderBottom: "1px solid rgba(0,255,136,0.2)",
+          borderBottom: "1px solid var(--border)",
           transition: "background 0.3s",
         }}
       >
@@ -124,9 +149,8 @@ const NavBar: FC = () => {
                 transition: "background 0.2s, box-shadow 0.2s",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(0,255,136,0.1)";
-                e.currentTarget.style.boxShadow =
-                  "0 0 20px rgba(0,255,136,0.2)";
+                e.currentTarget.style.background = "var(--green-glow)";
+                e.currentTarget.style.boxShadow = "0 0 20px var(--green-glow)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = "transparent";
@@ -171,7 +195,7 @@ const NavBar: FC = () => {
               right: 0,
               zIndex: 999,
               background: "rgba(6,10,7,0.98)",
-              borderBottom: "1px solid rgba(0,255,136,0.2)",
+              borderBottom: "1px solid var(--border)",
               padding: "1.5rem 2rem",
               display: "flex",
               flexDirection: "column",
@@ -192,7 +216,7 @@ const NavBar: FC = () => {
                   color: "var(--ivory-muted)",
                   textDecoration: "none",
                   padding: "0.5rem 0",
-                  borderBottom: "1px solid rgba(0,255,136,0.15)",
+                  borderBottom: "1px solid var(--border)",
                 }}
               >
                 {link.label}
@@ -222,7 +246,6 @@ const NavBar: FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Responsive styles injected */}
       <style>{`
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }

@@ -268,7 +268,7 @@ const Hero: FC = () => {
             }}
             // eslint-disable-next-line react/jsx-no-comment-textnodes
           >
-            // full-stack software developer
+            full-stack developer & network engineer
             <Cursor />
           </motion.div>
 
@@ -284,9 +284,9 @@ const Hero: FC = () => {
               marginBottom: "2.5rem",
             }}
           >
-            Building elegant solutions to complex problems with modern
-            technologies. Problem Solver &amp; Tech Enthusiast passionate about
-            creating impactful applications that make a real difference.
+            Building elegant software and designing resilient networks.
+            Full-Stack Developer & Network Engineer passionate about crafting
+            impactful applications and robust network infrastructure.
           </motion.p>
 
           <motion.div

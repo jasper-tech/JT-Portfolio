@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-type Theme = "default" | "jarvis" | "bluebeetle" | "ultron";
+type Theme = "system" | "jarvis" | "bluebeetle" | "ultron";
 
 interface ThemeOption {
   id: Theme;
@@ -14,12 +14,12 @@ interface ThemeOption {
 
 const themes: ThemeOption[] = [
   {
-    id: "default",
+    id: "system",
     label: "SA",
     primary: "#00ff88",
     secondary: "#00994f",
     bg: "#0d1410",
-    tooltip: "Default",
+    tooltip: "system",
   },
   {
     id: "jarvis",
@@ -48,18 +48,18 @@ const themes: ThemeOption[] = [
 ];
 
 const ThemeSwitcher: FC = () => {
-  const [active, setActive] = useState<Theme>("default");
+  const [active, setActive] = useState<Theme>("system");
   const [hoveredId, setHoveredId] = useState<Theme | null>(null);
 
   // Apply theme on mount (restore from localStorage)
   useEffect(() => {
     const saved =
-      (localStorage.getItem("portfolio-theme") as Theme) || "default";
+      (localStorage.getItem("portfolio-theme") as Theme) || "system";
     applyTheme(saved);
   }, []);
 
   const applyTheme = (theme: Theme) => {
-    if (theme === "default") {
+    if (theme === "system") {
       document.documentElement.removeAttribute("data-theme");
     } else {
       document.documentElement.setAttribute("data-theme", theme);
