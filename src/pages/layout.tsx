@@ -1,12 +1,16 @@
 import { FC } from "react";
 import { Outlet } from "react-router-dom";
 import NavBar from "../components/navbar";
+import ThemeSwitcher from "../components/ThemeSwitcher";
 
 const Layout: FC = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div
+      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+    >
       <NavBar />
-      <main className="flex-grow">
+      <ThemeSwitcher />
+      <main style={{ flexGrow: 1 }}>
         <Outlet />
       </main>
     </div>

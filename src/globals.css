@@ -232,3 +232,111 @@ body::after {
     opacity: 0;
   }
 }
+
+/* ── JARVIS THEME (Red & Gold) ── */
+[data-theme="jarvis"] {
+  --green: #ff4500;
+  --green-dim: #cc3700;
+  --green-dark: #992800;
+  --green-glow: rgba(255, 69, 0, 0.15);
+  --green-glow2: rgba(255, 69, 0, 0.08);
+  --ivory: #fff4e0;
+  --ivory-dim: #ffe0b0;
+  --ivory-muted: #c8a870;
+  --bg: #0a0500;
+  --bg2: #0f0800;
+  --bg3: #140a00;
+  --panel: #140800;
+  --border: rgba(255, 69, 0, 0.2);
+  --border-strong: rgba(255, 69, 0, 0.5);
+}
+
+[data-theme="jarvis"] body::before {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 140, 0, 0.015) 2px,
+    rgba(255, 140, 0, 0.015) 4px
+  );
+}
+
+[data-theme="jarvis"] body::after {
+  background-image: linear-gradient(rgba(255, 69, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 69, 0, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ── BLUE BEETLE THEME (Blue & White) ── */
+[data-theme="bluebeetle"] {
+  --green: #1e90ff;
+  --green-dim: #1a7de0;
+  --green-dark: #1060b0;
+  --green-glow: rgba(30, 144, 255, 0.15);
+  --green-glow2: rgba(30, 144, 255, 0.08);
+  --ivory: #eef4ff;
+  --ivory-dim: #d0e4ff;
+  --ivory-muted: #90b8e0;
+  --bg: #00050f;
+  --bg2: #000814;
+  --bg3: #000d1e;
+  --panel: #000c1a;
+  --border: rgba(30, 144, 255, 0.2);
+  --border-strong: rgba(30, 144, 255, 0.5);
+}
+
+[data-theme="bluebeetle"] body::before {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(30, 144, 255, 0.015) 2px,
+    rgba(30, 144, 255, 0.015) 4px
+  );
+}
+
+[data-theme="bluebeetle"] body::after {
+  background-image: linear-gradient(
+      rgba(30, 144, 255, 0.04) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(30, 144, 255, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ── ULTRON THEME (Silver & Black) ── */
+[data-theme="ultron"] {
+  --green: #c0c0c0;
+  --green-dim: #a0a0a0;
+  --green-dark: #707070;
+  --green-glow: rgba(192, 192, 192, 0.15);
+  --green-glow2: rgba(192, 192, 192, 0.07);
+  --ivory: #f0f0f0;
+  --ivory-dim: #d8d8d8;
+  --ivory-muted: #909090;
+  --bg: #050505;
+  --bg2: #080808;
+  --bg3: #0c0c0c;
+  --panel: #0a0a0a;
+  --border: rgba(192, 192, 192, 0.18);
+  --border-strong: rgba(192, 192, 192, 0.45);
+}
+
+[data-theme="ultron"] body::before {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(192, 192, 192, 0.012) 2px,
+    rgba(192, 192, 192, 0.012) 4px
+  );
+}
+
+[data-theme="ultron"] body::after {
+  background-image: linear-gradient(
+      rgba(192, 192, 192, 0.03) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(192, 192, 192, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
