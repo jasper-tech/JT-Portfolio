@@ -1,306 +1,349 @@
-import { FC } from "react";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
+import { FC, useState } from "react";
+// import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Github, ExternalLink } from "lucide-react";
 
 export interface Project {
   title: string;
   description: string;
-  tech: string[];
+  tech: { name: string; logo: string; invertInDark?: boolean }[];
   liveUrl?: string;
   githubUrl?: string;
-  image?: string;
   year: string;
   status?: "live" | "wip" | "archived";
 }
+
+const techMap: Record<string, { logo: string; invertInDark?: boolean }> = {
+  "Next.js": {
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+    invertInDark: true,
+  },
+  TypeScript: {
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+  },
+  Firebase: {
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
+  },
+  "Tailwind CSS": {
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+  },
+  Python: {
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+  },
+  React: {
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+  },
+  "React Native": {
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+  },
+  "Node.js": {
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+  },
+  MongoDB: {
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+  },
+};
 
 const projects: Project[] = [
   {
     title: "BibleQuiz App",
     description:
-      "A Next.js app for Bible quizzes, featuring a user-friendly interface and real-time score tracking.",
-    tech: ["Next.js", "TypeScript", "Firebase", "Tailwind CSS"],
+      "Bible quiz platform with real-time score tracking and a clean, user-friendly interface.",
+    tech: ["Next.js", "TypeScript", "Firebase", "Tailwind CSS"].map((n) => ({
+      name: n,
+      ...techMap[n],
+    })),
     liveUrl: "https://epsu-dv-bible-trivia-bowl.vercel.app",
     githubUrl: "https://github.com/jasper-tech/EPSU-DV-Bible-Trivia-Bowl",
-    image: "/images/projects/epsu-dv-bible-quiz-app.jpg",
-    year: "2025",
+    year: "2024",
     status: "live",
   },
   {
     title: "Joey Assistant Bot",
     description:
-      "An intermediate-level AI assistant with smart functionalities, conversational responses, and task automation.",
-    tech: ["Python"],
+      "AI assistant with conversational responses, smart task automation, and natural language handling.",
+    tech: ["Python"].map((n) => ({ name: n, ...techMap[n] })),
     githubUrl: "https://github.com/jasper-tech/Expiremental-Virtual-Assistant",
-    image: "/images/projects/joey.png",
     year: "2023",
     status: "archived",
   },
   {
-    title: "E-Commerce Platform",
+    title: "EMC, Union App",
     description:
-      "Full-stack e-commerce app with secure authentication, real-time payments, and complete product management.",
-    tech: ["React", "Node.js", "MongoDB", "Tailwind CSS"],
-    year: "2024",
-    status: "wip",
+      "Cross platform app built to manage union activities, finances, member records, and communications for EPSU.",
+    tech: ["React Native", "Firebase"].map((n) => ({ name: n, ...techMap[n] })),
+    githubUrl: "https://github.com/jasper-tech/EMC",
+    year: "2025",
+    status: "live",
   },
 ];
 
-/* ── Tag badge ── */
-const Tag: FC<{ label: string }> = ({ label }) => (
-  <span
-    style={{
-      fontFamily: "var(--font-mono)",
-      fontSize: "0.68rem",
-      padding: "3px 10px",
-      border: "1px solid rgba(0,255,136,0.2)",
-      color: "var(--green-dim)",
-      background: "rgba(0,255,136,0.06)",
-      letterSpacing: "0.06em",
-    }}
-  >
-    {label}
-  </span>
-);
+const statusConfig = {
+  live: {
+    label: "LIVE",
+    color: "#00ff88",
+    bg: "rgba(0,255,136,0.08)",
+    border: "rgba(0,255,136,0.3)",
+  },
+  wip: {
+    label: "IN PROGRESS",
+    color: "#ffaa00",
+    bg: "rgba(255,170,0,0.08)",
+    border: "rgba(255,170,0,0.3)",
+  },
+  archived: {
+    label: "ARCHIVED",
+    color: "#888",
+    bg: "rgba(136,136,136,0.08)",
+    border: "rgba(136,136,136,0.25)",
+  },
+};
 
 /* ── Single project card ── */
 const ProjectCard: FC<{ project: Project; index: number }> = ({
   project,
   index,
 }) => {
+  const [hovered, setHovered] = useState(false);
+  const status = project.status ? statusConfig[project.status] : null;
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -5, borderColor: "rgba(0,255,136,0.5)" }}
+      transition={{ duration: 0.4, delay: index * 0.08 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       style={{
-        background: "var(--panel)",
-        border: "1px solid rgba(0,255,136,0.2)",
-        overflow: "hidden",
+        background: hovered ? "var(--panel)" : "var(--panel)",
+        border: `1px solid ${
+          hovered ? "rgba(0,255,136,0.45)" : "rgba(0,255,136,0.15)"
+        }`,
+        borderRadius: "6px",
+        padding: hovered ? "1.1rem 1.15rem" : "0.75rem 0.9rem",
         display: "flex",
         flexDirection: "column",
-        transition: "border-color 0.3s",
+        gap: hovered ? "0.6rem" : "0.35rem",
+        transition: "all 0.3s cubic-bezier(0.4,0,0.2,1)",
+        cursor: "default",
+        boxShadow: hovered ? "0 8px 32px rgba(0,255,136,0.09)" : "none",
+        transform: hovered ? "translateY(-4px)" : "translateY(0)",
       }}
     >
-      {/* Image */}
+      {/* Top row: title + year + status */}
       <div
         style={{
-          width: "100%",
-          height: 180,
-          overflow: "hidden",
-          position: "relative",
-          background: project.image
-            ? "var(--bg3)"
-            : `linear-gradient(135deg, #0a1810, #062210)`,
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          gap: "0.45rem",
+          flexWrap: "wrap",
         }}
       >
-        {project.image ? (
-          <motion.img
-            src={project.image}
-            alt={project.title}
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.5 }}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              filter: "saturate(0.7) brightness(0.9)",
-            }}
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = "none";
-            }}
-          />
-        ) : (
-          <span
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "2rem",
-              color: "rgba(0,255,136,0.15)",
-              letterSpacing: "0.1em",
-            }}
-          >
-            {project.title.slice(0, 6).toUpperCase()}
-          </span>
-        )}
-
-        {/* Overlay gradient */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(to bottom, transparent 40%, rgba(13,20,16,0.85) 100%)",
-          }}
-        />
-
-        {/* Year badge */}
         <span
           style={{
-            position: "absolute",
-            top: 12,
-            right: 12,
+            fontFamily: "var(--font-display)",
+            fontSize: hovered ? "0.88rem" : "0.8rem",
+            fontWeight: 700,
+            color: hovered ? "var(--green)" : "var(--ivory)",
+            letterSpacing: "0.05em",
+            flex: 1,
+            minWidth: 0,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            transition: "font-size 0.3s, color 0.3s",
+          }}
+        >
+          {project.title}
+        </span>
+
+        <span
+          style={{
             fontFamily: "var(--font-mono)",
-            fontSize: "0.7rem",
-            color: "var(--green)",
-            background: "rgba(6,10,7,0.85)",
-            border: "1px solid rgba(0,255,136,0.2)",
-            padding: "2px 8px",
+            fontSize: "0.57rem",
+            color: "var(--green-dim)",
+            letterSpacing: "0.06em",
+            flexShrink: 0,
           }}
         >
           {project.year}
         </span>
 
-        {/* Status */}
-        {project.status === "wip" && (
+        {status && (
           <span
             style={{
-              position: "absolute",
-              top: 12,
-              left: 12,
               fontFamily: "var(--font-mono)",
-              fontSize: "0.65rem",
-              color: "#ffaa00",
-              background: "rgba(6,10,7,0.85)",
-              border: "1px solid rgba(255,170,0,0.3)",
-              padding: "2px 8px",
-              letterSpacing: "0.08em",
+              fontSize: "0.52rem",
+              letterSpacing: "0.07em",
+              color: status.color,
+              background: status.bg,
+              border: `1px solid ${status.border}`,
+              borderRadius: "3px",
+              padding: "1px 5px",
+              flexShrink: 0,
             }}
           >
-            IN PROGRESS
+            {status.label}
           </span>
         )}
       </div>
 
-      {/* Body */}
-      <div
+      {/* Description — always visible, expands on hover */}
+      <p
         style={{
-          padding: "1.25rem",
-          display: "flex",
-          flexDirection: "column",
-          flex: 1,
+          fontSize: hovered ? "0.72rem" : "0.67rem",
+          color: "var(--ivory-muted)",
+          lineHeight: hovered ? 1.65 : 1.4,
+          margin: 0,
+          transition: "all 0.3s",
+          display: "-webkit-box",
+          WebkitLineClamp: hovered ? "unset" : 2,
+          WebkitBoxOrient: "vertical",
+          overflow: hovered ? "visible" : "hidden",
         }}
       >
-        <h3
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "0.95rem",
-            fontWeight: 700,
-            color: "var(--ivory)",
-            letterSpacing: "0.06em",
-            marginBottom: "0.5rem",
-          }}
-        >
-          {project.title}
-        </h3>
-        <p
-          style={{
-            fontSize: "0.88rem",
-            color: "var(--ivory-muted)",
-            lineHeight: 1.7,
-            marginBottom: "1rem",
-            flex: 1,
-          }}
-        >
-          {project.description}
-        </p>
+        {project.description}
+      </p>
 
-        {/* Tags */}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 6,
-            marginBottom: "1rem",
-          }}
-        >
-          {project.tech.map((t) => (
-            <Tag key={t} label={t} />
-          ))}
-        </div>
-
-        {/* Links */}
-        <div style={{ display: "flex", gap: 10 }}>
-          {project.liveUrl && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+      {/* Tech icons — always visible */}
+      <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+        {project.tech.map((t) => (
+          <div
+            key={t.name}
+            title={t.name}
+            style={{
+              width: 16,
+              height: 16,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            <img
+              src={t.logo}
+              alt={t.name}
               style={{
-                fontFamily: "var(--font-ui)",
-                fontSize: "0.78rem",
-                fontWeight: 600,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                textDecoration: "none",
-                padding: "6px 14px",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-                color: "var(--bg)",
-                background: "var(--green)",
-                border: "1px solid var(--green)",
-                transition: "background 0.2s",
+                width: hovered ? 16 : 14,
+                height: hovered ? 16 : 14,
+                filter: t.invertInDark
+                  ? "invert(1) brightness(0.7) sepia(1) hue-rotate(90deg) saturate(3)"
+                  : undefined,
+                opacity: hovered ? 1 : 0.6,
+                transition: "all 0.3s",
               }}
-            >
-              <ExternalLink size={12} /> Live Demo
-            </a>
-          )}
-          {project.githubUrl && (
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                fontFamily: "var(--font-ui)",
-                fontSize: "0.78rem",
-                fontWeight: 600,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                textDecoration: "none",
-                padding: "6px 14px",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-                color: "var(--ivory-muted)",
-                background: "transparent",
-                border: "1px solid rgba(0,255,136,0.2)",
-                transition: "color 0.2s, border-color 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "var(--green)";
-                e.currentTarget.style.borderColor = "var(--green)";
-                e.currentTarget.style.background = "rgba(0,255,136,0.06)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "var(--ivory-muted)";
-                e.currentTarget.style.borderColor = "rgba(0,255,136,0.2)";
-                e.currentTarget.style.background = "transparent";
-              }}
-            >
-              <Github size={12} /> GitHub
-            </a>
-          )}
-          {!project.liveUrl && !project.githubUrl && (
-            <span
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.7rem",
-                color: "rgba(255,170,0,0.7)",
-                padding: "6px 14px",
-                border: "1px solid rgba(255,170,0,0.2)",
-                letterSpacing: "0.08em",
-              }}
-            >
-              Coming Soon
-            </span>
-          )}
-        </div>
+            />
+          </div>
+        ))}
       </div>
+
+      {/* Links row — expands on hover */}
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              overflow: "hidden",
+            }}
+          >
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="View on GitHub"
+                style={{
+                  color: "var(--ivory-muted)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  fontSize: "0.65rem",
+                  fontFamily: "var(--font-mono)",
+                  letterSpacing: "0.05em",
+                  textDecoration: "none",
+                  transition: "color 0.2s",
+                }}
+                onMouseEnter={(e) =>
+                  ((e.currentTarget as HTMLAnchorElement).style.color =
+                    "var(--green)")
+                }
+                onMouseLeave={(e) =>
+                  ((e.currentTarget as HTMLAnchorElement).style.color =
+                    "var(--ivory-muted)")
+                }
+              >
+                <Github size={11} /> Repo
+              </a>
+            )}
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: "var(--ivory-muted)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  fontSize: "0.65rem",
+                  fontFamily: "var(--font-mono)",
+                  letterSpacing: "0.05em",
+                  textDecoration: "none",
+                  transition: "color 0.2s",
+                }}
+                onMouseEnter={(e) =>
+                  ((e.currentTarget as HTMLAnchorElement).style.color =
+                    "var(--green)")
+                }
+                onMouseLeave={(e) =>
+                  ((e.currentTarget as HTMLAnchorElement).style.color =
+                    "var(--ivory-muted)")
+                }
+              >
+                <ExternalLink size={11} /> Live
+              </a>
+            )}
+            {!project.githubUrl && !project.liveUrl && (
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.55rem",
+                  color: "rgba(255,170,0,0.6)",
+                  letterSpacing: "0.07em",
+                }}
+              >
+                COMING SOON
+              </span>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* GitHub icon — always visible when NOT hovered (replaced by full row on hover) */}
+      {!hovered && project.githubUrl && (
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <a
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="View on GitHub"
+            style={{
+              color: "rgba(200,220,210,0.5)",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Github size={12} />
+          </a>
+        </div>
+      )}
     </motion.div>
   );
 };
@@ -310,7 +353,15 @@ const Projects: FC = () => {
   return (
     <section
       id="projects"
-      style={{ padding: "6rem 3rem", position: "relative", zIndex: 1 }}
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        padding: "6rem 3rem",
+        position: "relative",
+        zIndex: 1,
+      }}
     >
       <motion.div
         className="sec-header"
@@ -320,20 +371,35 @@ const Projects: FC = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="sec-label">Work</div>
-        <h2 className="sec-title">Featured Projects</h2>
+        {/* <h2 className="sec-title">Featured Projects</h2> */}
         <p className="sec-desc">
           Selected builds showcasing my skills and problem-solving approach
         </p>
       </motion.div>
 
+      <p
+        style={{
+          textAlign: "center",
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.62rem",
+          color: "rgba(160,180,170,0.95)",
+          letterSpacing: "0.1em",
+          marginBottom: "0.75rem",
+        }}
+      >
+        hover a card to expand
+      </p>
+
       <div
         style={{
-          maxWidth: 1100,
+          maxWidth: 860,
+          width: "100%",
           margin: "0 auto",
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          gap: "1.5rem",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "0.75rem",
         }}
+        className="projects-grid"
       >
         {projects.map((p, i) => (
           <ProjectCard key={p.title} project={p} index={i} />
@@ -341,22 +407,26 @@ const Projects: FC = () => {
       </div>
 
       {/* View all */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        style={{ textAlign: "center", marginTop: "3rem" }}
+        style={{ textAlign: "center", marginTop: "2.5rem" }}
       >
         <Link to="/all-projects" className="btn-outline">
           <ArrowUpRight size={14} />
           View All Projects
         </Link>
-      </motion.div>
+      </motion.div> */}
 
       <style>{`
         @media (max-width: 900px) {
           #projects { padding: 4rem 1.5rem !important; }
+          .projects-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 520px) {
+          .projects-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>

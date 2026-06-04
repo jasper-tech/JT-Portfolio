@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Zap } from "lucide-react";
+import { Send } from "lucide-react";
 import Hero from "../components/HeroSection";
 import TechStack from "../components/TechStack";
 import Projects from "../components/ProjectSection";
@@ -66,7 +66,7 @@ const HomePage: FC = () => {
             Let's connect and bring your ideas to life.
           </p>
           <Link to="/contact" className="btn-primary">
-            <Zap size={14} />
+            <Send size={14} />
             Start a Conversation
           </Link>
         </motion.div>

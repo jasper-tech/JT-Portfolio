@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { motion } from "framer-motion";
 import { Send, Mail, Github, Linkedin } from "lucide-react";
+import emailjs from "@emailjs/browser";
 
 interface FormValues {
   name: string;
@@ -13,6 +14,10 @@ interface FormErrors {
   email?: string;
   message?: string;
 }
+
+const EMAILJS_SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID!;
+const EMAILJS_TEMPLATE_ID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID!;
+const EMAILJS_PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY!;
 
 const validate = (values: FormValues): FormErrors => {
   const errors: FormErrors = {};
@@ -46,6 +51,8 @@ const ContactMe: FC = () => {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState(false);
   const [focused, setFocused] = useState<string | null>(null);
 
   const handleChange = (
@@ -57,15 +64,37 @@ const ContactMe: FC = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const errs = validate(values);
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
       return;
     }
-    setSubmitted(true);
-    setValues({ name: "", email: "", message: "" });
-    setTimeout(() => setSubmitted(false), 5000);
+
+    setSending(true);
+    setSendError(false);
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: values.name,
+          from_email: values.email,
+          message: values.message,
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+
+      setSubmitted(true);
+      setValues({ name: "", email: "", message: "" });
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (error) {
+      setSendError(true);
+      setTimeout(() => setSendError(false), 5000);
+    } finally {
+      setSending(false);
+    }
   };
 
   const fields: {
@@ -78,7 +107,7 @@ const ContactMe: FC = () => {
     { id: "name", label: "Your Name", type: "text", placeholder: "John Doe" },
     {
       id: "email",
-      label: "Email Address",
+      label: "Your Email Address",
       type: "email",
       placeholder: "hello@example.com",
     },
@@ -256,8 +285,13 @@ const ContactMe: FC = () => {
 
           <motion.button
             onClick={handleSubmit}
-            whileHover={{ boxShadow: "0 0 30px rgba(0,255,136,0.4)", y: -2 }}
-            whileTap={{ scale: 0.98 }}
+            disabled={sending}
+            whileHover={
+              !sending
+                ? { boxShadow: "0 0 30px rgba(0,255,136,0.4)", y: -2 }
+                : {}
+            }
+            whileTap={!sending ? { scale: 0.98 } : {}}
             style={{
               width: "100%",
               marginTop: "0.5rem",
@@ -267,18 +301,19 @@ const ContactMe: FC = () => {
               letterSpacing: "0.16em",
               textTransform: "uppercase",
               padding: 14,
-              background: "var(--green)",
-              color: "var(--bg)",
+              background: sending ? "rgba(0,255,136,0.4)" : "var(--green)",
+              color: "#000000",
               border: "none",
-              cursor: "pointer",
+              cursor: sending ? "not-allowed" : "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               gap: 10,
+              transition: "background 0.2s",
             }}
           >
             <Send size={16} />
-            Send Message
+            {sending ? "Sending..." : "Send Message"}
           </motion.button>
 
           {submitted && (
@@ -298,6 +333,26 @@ const ContactMe: FC = () => {
               }}
             >
               ✓ Message transmitted. I'll get back to you soon.
+            </motion.div>
+          )}
+
+          {sendError && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              style={{
+                textAlign: "center",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.85rem",
+                color: "rgba(255,100,100,0.9)",
+                padding: "1rem",
+                border: "1px solid rgba(255,80,80,0.3)",
+                marginTop: "1rem",
+                background: "rgba(255,80,80,0.06)",
+                letterSpacing: "0.06em",
+              }}
+            >
+              ✕ Something went wrong. Please try again.
             </motion.div>
           )}
         </div>
