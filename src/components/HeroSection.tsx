@@ -37,7 +37,13 @@ const Hero: FC = () => {
       return;
     }
 
-    const sectionOrder = ["hero", "tech", "projects", "resume", "contact"];
+    const sectionOrder = [
+      "hero",
+      "tech",
+      "projects",
+      "get in touch",
+      "contact",
+    ];
     const targetId = nextSectionId;
     const targetEl = document.getElementById(targetId);
 
@@ -61,7 +67,13 @@ const Hero: FC = () => {
   };
 
   useEffect(() => {
-    const sectionOrder = ["hero", "tech", "projects", "resume", "contact"];
+    const sectionOrder = [
+      "hero",
+      "tech",
+      "projects",
+      "get in touch",
+      "contact",
+    ];
 
     const handleScroll = () => {
       if (isScrolling.current) return;
@@ -108,7 +120,7 @@ const Hero: FC = () => {
       hero: "Work",
       tech: "Stack",
       projects: "Projects",
-      resume: "Resume",
+      resume: "Get In Touch",
       contact: "Contact",
     };
     return sectionNames[nextSectionId] || "Scroll";
