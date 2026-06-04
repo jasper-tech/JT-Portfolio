@@ -26,12 +26,10 @@ const NavBar: FC = () => {
     const params = new URLSearchParams(location.search);
     const scrollTo = params.get("scrollTo");
     if (scrollTo && location.pathname === "/") {
-      // Small delay to let the page render its sections first
       const timer = setTimeout(() => {
         document
           .getElementById(scrollTo)
           ?.scrollIntoView({ behavior: "smooth" });
-        // Clean up the query param without adding a history entry
         navigate("/", { replace: true });
       }, 80);
       return () => clearTimeout(timer);
@@ -48,10 +46,8 @@ const NavBar: FC = () => {
     setOpen(false);
 
     if (location.pathname === "/") {
-      // Already on homepage — just scroll
       document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     } else {
-      // Navigate to homepage with the section as a query param
       navigate(`/?scrollTo=${id}`);
     }
   };
@@ -73,7 +69,9 @@ const NavBar: FC = () => {
           justifyContent: "space-between",
           padding: "0 3rem",
           height: "64px",
-          background: scrolled ? "rgba(6,10,7,0.95)" : "rgba(6,10,7,0.6)",
+          background: scrolled
+            ? "rgba(var(--bg-rgb), 0.95)"
+            : "rgba(var(--bg-rgb), 0.6)",
           backdropFilter: "blur(12px)",
           borderBottom: "1px solid var(--border)",
           transition: "background 0.3s",
@@ -86,7 +84,7 @@ const NavBar: FC = () => {
             fontFamily: "var(--font-display)",
             fontSize: "1rem",
             fontWeight: 700,
-            color: "var(--green)",
+            color: "var(--accent)",
             letterSpacing: "0.12em",
             textDecoration: "none",
             display: "flex",
@@ -100,7 +98,7 @@ const NavBar: FC = () => {
 
         {/* Desktop links */}
         <div
-          style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}
+          style={{ display: "flex", alignItems: "center", gap: "2rem" }}
           className="desktop-nav"
         >
           {navLinks.map((link) => (
@@ -111,19 +109,19 @@ const NavBar: FC = () => {
               whileHover={{ y: -2 }}
               style={{
                 fontFamily: "var(--font-ui)",
-                fontSize: "0.9rem",
-                fontWeight: 600,
-                letterSpacing: "0.1em",
+                fontSize: "0.85rem",
+                fontWeight: 500,
+                letterSpacing: "0.08em",
                 textTransform: "uppercase",
-                color: "var(--ivory-muted)",
+                color: "var(--text-secondary)",
                 textDecoration: "none",
                 transition: "color 0.2s",
               }}
               onMouseEnter={(e) =>
-                (e.currentTarget.style.color = "var(--green)")
+                (e.currentTarget.style.color = "var(--accent)")
               }
               onMouseLeave={(e) =>
-                (e.currentTarget.style.color = "var(--ivory-muted)")
+                (e.currentTarget.style.color = "var(--text-secondary)")
               }
             >
               {link.label}
@@ -135,26 +133,25 @@ const NavBar: FC = () => {
               style={{
                 fontFamily: "var(--font-display)",
                 fontSize: "0.7rem",
-                fontWeight: 700,
-                letterSpacing: "0.14em",
+                fontWeight: 600,
+                letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                padding: "7px 20px",
+                padding: "6px 18px",
                 background: "transparent",
-                color: "var(--green)",
-                border: "1px solid var(--green)",
+                color: "var(--accent)",
+                border: "1.5px solid var(--accent)",
                 textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "6px",
-                transition: "background 0.2s, box-shadow 0.2s",
+                transition: "all 0.2s ease",
+                borderRadius: "6px",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "var(--green-glow)";
-                e.currentTarget.style.boxShadow = "0 0 20px var(--green-glow)";
+                e.currentTarget.style.background = "var(--accent-glow)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.boxShadow = "none";
               }}
             >
               Get In Touch
@@ -169,7 +166,7 @@ const NavBar: FC = () => {
             display: "none",
             background: "none",
             border: "none",
-            color: "var(--green)",
+            color: "var(--accent)",
             cursor: "pointer",
             padding: "4px",
           }}
@@ -194,7 +191,7 @@ const NavBar: FC = () => {
               left: 0,
               right: 0,
               zIndex: 999,
-              background: "rgba(6,10,7,0.98)",
+              background: "var(--bg)",
               borderBottom: "1px solid var(--border)",
               padding: "1.5rem 2rem",
               display: "flex",
@@ -209,11 +206,11 @@ const NavBar: FC = () => {
                 onClick={(e) => handleAnchor(e, link.to)}
                 style={{
                   fontFamily: "var(--font-ui)",
-                  fontWeight: 600,
-                  letterSpacing: "0.1em",
+                  fontWeight: 500,
+                  letterSpacing: "0.08em",
                   textTransform: "uppercase",
-                  fontSize: "1rem",
-                  color: "var(--ivory-muted)",
+                  fontSize: "0.9rem",
+                  color: "var(--text-secondary)",
                   textDecoration: "none",
                   padding: "0.5rem 0",
                   borderBottom: "1px solid var(--border)",
@@ -227,17 +224,18 @@ const NavBar: FC = () => {
               onClick={() => setOpen(false)}
               style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "0.75rem",
-                fontWeight: 700,
-                letterSpacing: "0.14em",
+                fontSize: "0.7rem",
+                fontWeight: 600,
+                letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                padding: "12px",
-                background: "var(--green)",
-                color: "var(--bg)",
+                padding: "10px",
+                background: "var(--accent)",
+                color: "white",
                 textDecoration: "none",
                 display: "block",
                 textAlign: "center",
                 marginTop: "0.5rem",
+                borderRadius: "6px",
               }}
             >
               Get In Touch

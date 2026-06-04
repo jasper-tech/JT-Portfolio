@@ -1,25 +1,62 @@
-/* ── Google Fonts ── */
-@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap");
+/* ── Google Fonts: Human + Robotic Blend ── */
+@import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
-/* ── Design Tokens ── */
+/* ── RGB variables for opacity support ── */
 :root {
-  --green: #00ff88;
-  --green-dim: #00cc6a;
-  --green-dark: #00994f;
-  --green-glow: rgba(0, 255, 136, 0.15);
-  --green-glow2: rgba(0, 255, 136, 0.08);
-  --ivory: #f5f0e8;
-  --ivory-dim: #e8e0d0;
-  --ivory-muted: #c8bfa8;
-  --bg: #060a07;
-  --bg2: #0a0f0b;
-  --bg3: #0e1510;
-  --panel: #0d1410;
-  --border: rgba(0, 255, 136, 0.2);
-  --border-strong: rgba(0, 255, 136, 0.5);
-  --font-display: "Orbitron", monospace;
-  --font-ui: "Rajdhani", sans-serif;
-  --font-mono: "Share Tech Mono", monospace;
+  --bg-rgb: 248, 250, 252;
+}
+
+/* ── Design Tokens (Light Mode Default) ── */
+:root {
+  --bg-rgb: 248, 250, 252;
+
+  /* Primary accent - deeper blue for better contrast */
+  --accent: #2563eb;
+  --accent-dim: #3b82f6;
+  --accent-dark: #1d4ed8;
+  --accent-glow: rgba(37, 99, 235, 0.08);
+  --accent-glow2: rgba(37, 99, 235, 0.04);
+
+  /* Text colors - Dark grey text on light background */
+  --text-primary: #1e293b;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+
+  /* Backgrounds - soft light */
+  --bg: #f8fafc;
+  --bg2: #f1f5f9;
+  --bg3: #e9eef3;
+  --panel: #ffffff;
+  --border: rgba(37, 99, 235, 0.12);
+  --border-strong: rgba(37, 99, 235, 0.25);
+
+  /* Font families - Human + Robotic blend */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+}
+
+/* ── Dark Mode (kept as fallback but not active) ── */
+[data-theme="dark"] {
+  --bg-rgb: 10, 10, 15;
+
+  --accent: #3b82f6;
+  --accent-dim: #60a5fa;
+  --accent-dark: #2563eb;
+  --accent-glow: rgba(59, 130, 246, 0.15);
+  --accent-glow2: rgba(59, 130, 246, 0.08);
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+
+  --bg: #0a0a0f;
+  --bg2: #0f0f14;
+  --bg3: #14141a;
+  --panel: #111116;
+  --border: rgba(59, 130, 246, 0.15);
+  --border-strong: rgba(59, 130, 246, 0.35);
 }
 
 /* ── Reset ── */
@@ -37,14 +74,38 @@ html {
 
 body {
   background: var(--bg);
-  color: var(--ivory);
-  font-family: var(--font-ui);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
   font-size: 17px;
-  line-height: 1.6;
+  line-height: 1.65;
+  font-weight: 400;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.2s ease;
 }
 
-/* ── Scanline overlay ── */
+/* Typography - Balanced Human + Robotic */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+/* Paragraph and body text */
+p,
+span,
+li,
+.body-text {
+  color: var(--text-secondary);
+}
+
+/* Subtle scanline overlay (toned down) */
 body::before {
   content: "";
   position: fixed;
@@ -53,39 +114,41 @@ body::before {
     0deg,
     transparent,
     transparent 2px,
-    rgba(0, 255, 136, 0.015) 2px,
-    rgba(0, 255, 136, 0.015) 4px
+    rgba(59, 130, 246, 0.008) 2px,
+    rgba(59, 130, 246, 0.008) 4px
   );
   pointer-events: none;
   z-index: 9999;
+  opacity: 0.5;
 }
 
-/* ── Grid background ── */
+/* Subtle grid background - very faint */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   background-image: linear-gradient(
-      rgba(0, 255, 136, 0.04) 1px,
+      rgba(59, 130, 246, 0.02) 1px,
       transparent 1px
     ),
-    linear-gradient(90deg, rgba(0, 255, 136, 0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
+    linear-gradient(90deg, rgba(59, 130, 246, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
   pointer-events: none;
   z-index: 0;
 }
 
-/* ── Shared utility classes ── */
+/* ── Section header styles ── */
 .sec-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3.5rem;
 }
 
 .sec-label {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--green);
-  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   display: flex;
   align-items: center;
@@ -98,131 +161,92 @@ body::after {
 .sec-label::after {
   content: "";
   flex: 1;
-  max-width: 60px;
+  max-width: 50px;
   height: 1px;
-  background: linear-gradient(to right, transparent, var(--green));
+  background: linear-gradient(to right, transparent, var(--accent));
 }
 
 .sec-label::after {
-  background: linear-gradient(to left, transparent, var(--green));
+  background: linear-gradient(to left, transparent, var(--accent));
 }
 
 .sec-title {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
   font-weight: 700;
-  color: var(--ivory);
-  letter-spacing: 0.06em;
+  letter-spacing: -0.02em;
+  background: linear-gradient(
+    135deg,
+    var(--text-primary) 0%,
+    var(--accent) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 .sec-desc {
-  color: var(--ivory-muted);
+  color: var(--text-muted);
   max-width: 560px;
   margin: 0.75rem auto 0;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
 }
 
+/* ── Button styles ── */
 .btn-primary {
   font-family: var(--font-display);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 14px 32px;
-  background: var(--green);
-  color: var(--bg);
+  padding: 12px 28px;
+  background: var(--accent);
+  color: white;
   border: none;
   cursor: pointer;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: box-shadow 0.2s, transform 0.15s;
-  clip-path: polygon(
-    0 0,
-    calc(100% - 12px) 0,
-    100% 12px,
-    100% 100%,
-    12px 100%,
-    0 calc(100% - 12px)
-  );
+  transition: all 0.2s ease;
+  border-radius: 8px;
 }
 
 .btn-primary:hover {
-  box-shadow: 0 0 30px rgba(0, 255, 136, 0.45);
+  background: var(--accent-dim);
   transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
 }
 
 .btn-outline {
   font-family: var(--font-display);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 13px 32px;
+  padding: 11px 28px;
   background: transparent;
-  color: var(--ivory);
-  border: 1px solid var(--border-strong);
+  color: var(--text-primary);
+  border: 1.5px solid var(--border-strong);
   cursor: pointer;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: border-color 0.2s, color 0.2s, background 0.2s;
-  clip-path: polygon(
-    0 0,
-    calc(100% - 12px) 0,
-    100% 12px,
-    100% 100%,
-    12px 100%,
-    0 calc(100% - 12px)
-  );
+  transition: all 0.2s ease;
+  border-radius: 8px;
 }
 
 .btn-outline:hover {
-  border-color: var(--green);
-  color: var(--green);
-  background: var(--green-glow2);
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-glow2);
+  transform: translateY(-2px);
 }
 
-/* ── Keyframe animations ── */
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
-  }
-}
-
-@keyframes ring-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes dot-blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.2;
-  }
-}
-
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* ── Animations ── */
 @keyframes cursor-blink {
   0%,
   100% {
@@ -233,110 +257,58 @@ body::after {
   }
 }
 
-/* ── JARVIS THEME (Red & Gold) ── */
-[data-theme="jarvis"] {
-  --green: #ff4500;
-  --green-dim: #cc3700;
-  --green-dark: #992800;
-  --green-glow: rgba(255, 69, 0, 0.15);
-  --green-glow2: rgba(255, 69, 0, 0.08);
-  --ivory: #fff4e0;
-  --ivory-dim: #ffe0b0;
-  --ivory-muted: #c8a870;
-  --bg: #0a0500;
-  --bg2: #0f0800;
-  --bg3: #140a00;
-  --panel: #140800;
-  --border: rgba(255, 69, 0, 0.2);
-  --border-strong: rgba(255, 69, 0, 0.5);
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
-[data-theme="jarvis"] body::before {
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(255, 140, 0, 0.015) 2px,
-    rgba(255, 140, 0, 0.015) 4px
-  );
+/* ── Code/tech text styling ── */
+code,
+.tech-text {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--accent);
 }
 
-[data-theme="jarvis"] body::after {
-  background-image: linear-gradient(rgba(255, 69, 0, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 69, 0, 0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
+/* ── Links ── */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-/* ── BLUE BEETLE THEME (Blue & White) ── */
-[data-theme="bluebeetle"] {
-  --green: #1e90ff;
-  --green-dim: #1a7de0;
-  --green-dark: #1060b0;
-  --green-glow: rgba(30, 144, 255, 0.15);
-  --green-glow2: rgba(30, 144, 255, 0.08);
-  --ivory: #eef4ff;
-  --ivory-dim: #d0e4ff;
-  --ivory-muted: #90b8e0;
-  --bg: #00050f;
-  --bg2: #000814;
-  --bg3: #000d1e;
-  --panel: #000c1a;
-  --border: rgba(30, 144, 255, 0.2);
-  --border-strong: rgba(30, 144, 255, 0.5);
+/* ── Selection styling ── */
+::selection {
+  background: var(--accent-glow);
+  color: var(--accent);
 }
 
-[data-theme="bluebeetle"] body::before {
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(30, 144, 255, 0.015) 2px,
-    rgba(30, 144, 255, 0.015) 4px
-  );
+/* ── Card and panel styling ── */
+.card,
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: all 0.2s ease;
 }
 
-[data-theme="bluebeetle"] body::after {
-  background-image: linear-gradient(
-      rgba(30, 144, 255, 0.04) 1px,
-      transparent 1px
-    ),
-    linear-gradient(90deg, rgba(30, 144, 255, 0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
+/* ── Responsive adjustments ── */
+@media (max-width: 768px) {
+  .sec-header {
+    margin-bottom: 2.5rem;
+  }
 
-/* ── ULTRON THEME (Silver & Black) ── */
-[data-theme="ultron"] {
-  --green: #c0c0c0;
-  --green-dim: #a0a0a0;
-  --green-dark: #707070;
-  --green-glow: rgba(192, 192, 192, 0.15);
-  --green-glow2: rgba(192, 192, 192, 0.07);
-  --ivory: #f0f0f0;
-  --ivory-dim: #d8d8d8;
-  --ivory-muted: #909090;
-  --bg: #050505;
-  --bg2: #080808;
-  --bg3: #0c0c0c;
-  --panel: #0a0a0a;
-  --border: rgba(192, 192, 192, 0.18);
-  --border-strong: rgba(192, 192, 192, 0.45);
-}
+  .sec-label {
+    font-size: 0.65rem;
+  }
 
-[data-theme="ultron"] body::before {
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(192, 192, 192, 0.012) 2px,
-    rgba(192, 192, 192, 0.012) 4px
-  );
-}
-
-[data-theme="ultron"] body::after {
-  background-image: linear-gradient(
-      rgba(192, 192, 192, 0.03) 1px,
-      transparent 1px
-    ),
-    linear-gradient(90deg, rgba(192, 192, 192, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
+  .sec-desc {
+    font-size: 0.9rem;
+    padding: 0 1rem;
+  }
 }
