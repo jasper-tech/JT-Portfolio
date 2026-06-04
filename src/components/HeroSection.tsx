@@ -23,48 +23,66 @@ const Hero: FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(false);
   const [nextSectionId, setNextSectionId] = useState<string>("tech");
+  const isScrolling = useRef(false);
 
   const scrollToNextSection = () => {
+    if (isScrolling.current) return;
+
     if (isAtBottom) {
-      // Scroll back to hero
+      isScrolling.current = true;
       document.getElementById("hero")?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      const nextSection = document.getElementById(nextSectionId);
-      if (nextSection) {
-        nextSection.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => {
+        isScrolling.current = false;
+      }, 800);
+      return;
+    }
+
+    const sectionOrder = ["hero", "tech", "projects", "resume", "contact"];
+    const targetId = nextSectionId;
+    const targetEl = document.getElementById(targetId);
+
+    if (targetEl) {
+      isScrolling.current = true;
+      targetEl.scrollIntoView({ behavior: "smooth" });
+
+      // After scroll, pre-calculate the next section
+      const currentIndex = sectionOrder.indexOf(targetId);
+      if (currentIndex !== -1 && currentIndex < sectionOrder.length - 1) {
+        setTimeout(() => {
+          setNextSectionId(sectionOrder[currentIndex + 1]);
+          isScrolling.current = false;
+        }, 800);
+      } else {
+        setTimeout(() => {
+          isScrolling.current = false;
+        }, 800);
       }
     }
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight;
-      const footer = document.querySelector("footer");
-      const bodyHeight = document.body.scrollHeight;
+    const sectionOrder = ["hero", "tech", "projects", "resume", "contact"];
 
-      // Determine which section to scroll to next based on current position
-      const sections = [
-        { id: "hero", element: document.getElementById("hero") },
-        { id: "tech", element: document.getElementById("tech") },
-        { id: "projects", element: document.getElementById("projects") },
-        { id: "resume", element: document.getElementById("resume") },
-        { id: "contact", element: document.getElementById("contact") },
-      ];
+    const handleScroll = () => {
+      if (isScrolling.current) return;
+
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const bodyHeight = document.body.scrollHeight;
 
       // Find the current visible section
       let currentSection = "hero";
-      for (const section of sections) {
-        if (section.element) {
-          const rect = section.element.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom >= 100) {
-            currentSection = section.id;
+      for (const id of sectionOrder) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 120 && rect.bottom >= 120) {
+            currentSection = id;
             break;
           }
         }
       }
 
-      // Set next section based on current section
-      const sectionOrder = ["hero", "tech", "projects", "resume", "contact"];
+      // Set next section based on current
       const currentIndex = sectionOrder.indexOf(currentSection);
       if (currentIndex !== -1 && currentIndex < sectionOrder.length - 1) {
         setNextSectionId(sectionOrder[currentIndex + 1]);
@@ -72,23 +90,19 @@ const Hero: FC = () => {
         setNextSectionId("hero");
       }
 
-      // Check if we're near the footer
-      if (footer) {
-        const footerTop = footer.getBoundingClientRect().top + window.scrollY;
-        if (scrollPosition >= bodyHeight - 150) {
-          setIsAtBottom(true);
-        } else {
-          setIsAtBottom(false);
-        }
+      // Check if near bottom
+      if (scrollPosition >= bodyHeight - 150) {
+        setIsAtBottom(true);
+      } else {
+        setIsAtBottom(false);
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Call once to initialize
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Helper to get next section name for display
   const getNextSectionName = () => {
     const sectionNames: Record<string, string> = {
       hero: "Work",
@@ -192,7 +206,7 @@ const Hero: FC = () => {
           </motion.div>
         </div>
 
-        {/* Right column — Your image */}
+        {/* Right column — image */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={{
@@ -217,6 +231,7 @@ const Hero: FC = () => {
           >
             {/* Tilted frame */}
             <div
+              className="hero-tilted-frame"
               style={{
                 position: "absolute",
                 inset: 0,
@@ -230,6 +245,7 @@ const Hero: FC = () => {
 
             {/* Main card */}
             <div
+              className="hero-main-card"
               style={{
                 position: "relative",
                 width: "100%",
@@ -330,138 +346,106 @@ const Hero: FC = () => {
       </motion.div>
 
       <style>{`
+        /* ── MOBILE: stack image above text ── */
         @media (max-width: 900px) {
-          .hero-grid { 
-            grid-template-columns: 1fr !important; 
-            gap: 0 !important;
-            position: relative;
-          }
-          
-          #hero { 
-            padding: 0 !important;
+          #hero {
+            padding: 5rem 1.5rem 5rem !important;
             min-height: 100vh;
-            position: relative;
-            overflow: hidden;
+            align-items: flex-start !important;
           }
-          
-          /* Hero content overlays on bottom of image */
-          .hero-content {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 3;
-            background: linear-gradient(to top, rgba(var(--bg-rgb), 0.95) 0%, rgba(var(--bg-rgb), 0.85) 60%, transparent 100%);
-            backdrop-filter: blur(8px);
-            padding: 2rem 1.5rem 1.5rem;
-            border-radius: 24px 24px 0 0;
-            text-align: center;
-            margin: 0;
+
+          .hero-grid {
+            grid-template-columns: 1fr !important;
+            gap: 2rem !important;
+            /* image first (row 1), content second (row 2) */
           }
-          
+
+          /* Put image column first visually */
           .hero-image-col {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 1;
+            order: -1;
           }
-          
-          .hero-image-col > div {
+
+          /* Reset any absolute/overlay positioning */
+          .hero-content {
+            position: static !important;
+            background: none !important;
+            backdrop-filter: none !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+            text-align: left;
+            z-index: auto !important;
+          }
+
+          /* Image column: natural flow, centered */
+          .hero-image-col {
+            position: static !important;
             width: 100%;
-            max-width: none;
-            height: 100%;
-            border-radius: 0;
-            border: none;
-            box-shadow: none;
-          }
-          
-          .hero-image-col > div > div {
-            transform: none !important;
-            border-radius: 0;
-            margin: 0;
-            width: 100%;
-            height: 100%;
-          }
-          
-          .hero-image-col img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-          }
-          
-          /* Circle buttons on the left side */
-          .hero-buttons {
-            position: fixed;
-            left: 1rem;
-            bottom: 2rem;
-            z-index: 100;
             display: flex;
-            flex-direction: column;
-            gap: 1rem;
-          }
-          
-          .hero-buttons a {
-            width: 48px;
-            height: 48px;
-            padding: 0;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            background: var(--accent);
-            color: white;
-            border: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
           }
-          
-          .hero-buttons a span {
-            display: none;
+
+          /* Keep the same decorative border style as desktop */
+          .hero-image-col > div {
+            position: relative !important;
+            width: 100% !important;
+            max-width: 280px !important;
+            height: 340px !important;
           }
-          
-          .hero-buttons a svg {
-            width: 20px;
-            height: 20px;
-            margin: 0;
+
+          /* Keep the tilted accent frame */
+          .hero-tilted-frame {
+            position: absolute !important;
+            inset: 0 !important;
+            border: 3px solid var(--accent) !important;
+            border-radius: 24px !important;
+            transform: rotate(-8deg) !important;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12) !important;
           }
-          
-          .hero-buttons .btn-outline {
-            background: var(--panel);
-            color: var(--accent);
-            border: 1.5px solid var(--accent);
+
+          /* Keep the main card border/shadow */
+          .hero-main-card {
+            position: relative !important;
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 24px !important;
+            overflow: hidden !important;
+            border: 1px solid var(--border) !important;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.18), 0 0 30px var(--accent-glow) !important;
+            transform: translateY(-10px) !important;
           }
-          
-          .hero-buttons .btn-outline:hover {
-            background: var(--accent);
-            color: white;
-          }
-          
+
+          /* Buttons stay inline below text */
           .hero-buttons {
+            position: static !important;
+            flex-direction: row !important;
+            flex-wrap: wrap;
             margin-bottom: 0;
           }
-        }
-        
-        @media (max-width: 640px) {
-          .hero-content {
-            padding: 1.5rem 1rem 1rem;
-          }
-          
-          .hero-content h1 {
-            font-size: 1.8rem !important;
-          }
-        }
-        
-        @media (max-width: 480px) {
-          .hero-buttons {
-            left: 0.75rem;
-            bottom: 1.5rem;
-          }
-          
+
           .hero-buttons a {
-            width: 42px;
-            height: 42px;
+            width: auto !important;
+            height: auto !important;
+            padding: 0.6rem 1.2rem !important;
+            border-radius: 8px !important;
+          }
+
+          .hero-buttons a span {
+            display: inline !important;
+          }
+        }
+
+        @media (max-width: 640px) {
+          #hero {
+            padding: 4.5rem 1rem 4rem !important;
+          }
+
+          .hero-image-col > div {
+            max-width: 220px !important;
+            height: 270px !important;
+          }
+
+          .hero-content h1 {
+            font-size: 1.9rem !important;
           }
         }
       `}</style>
