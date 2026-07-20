@@ -72,7 +72,7 @@ const projects: Project[] = [
     description:
       "Cross platform app built to manage union activities, finances, member records, and communications for EPSU.",
     tech: ["React Native", "Firebase"].map((n) => ({ name: n, ...techMap[n] })),
-    liveUrl: "https://emc-virid.vercel.app"
+    liveUrl: "https://emc-virid.vercel.app",
     githubUrl: "https://github.com/jasper-tech/EMC",
     year: "2025",
     status: "live",
