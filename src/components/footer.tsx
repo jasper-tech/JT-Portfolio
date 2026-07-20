@@ -44,7 +44,7 @@ const Footer: FC = () => {
       Icon: GithubIcon,
     },
     {
-      href: "https://linkedin.com/in/afeawo-sandy",
+      href: "https://www.linkedin.com/in/afeawo-sandy-298235215/",
       label: "LinkedIn",
       Icon: LinkedInIcon,
     },
