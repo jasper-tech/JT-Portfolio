@@ -132,7 +132,7 @@ const ContactMe: FC = () => {
       target: "_blank",
     },
     {
-      href: "https://linkedin.com/in/afeawo-sandy",
+      href: "https://www.linkedin.com/in/afeawo-sandy-298235215/",
       icon: <Linkedin size={16} />,
       label: "LinkedIn",
       target: "_blank",
